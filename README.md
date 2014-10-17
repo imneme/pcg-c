@@ -28,7 +28,7 @@ type type
 
     make
 
-Almost all the real code is in `include/pcg-variants.h`.  Because the
+Almost all the real code is in `include/pcg_variants.h`.  Because the
 individual RNGs have a very small amount of code, they are provided as
 inline functions to allow the compiler the option of inlining them.
 But because C requires there to also be an external definition, the
@@ -49,9 +49,9 @@ Run
 
 The directories are arranged as follows:
 
-* `include` -- contains `pcg-variants.h`
+* `include` -- contains `pcg_variants.h`
 * `src` -- code to define external versions of the inline functions from
-  `pcg-variants.h` plus all the `_advance_r` functions.
+  `pcg_variants.h` plus all the `_advance_r` functions.
 * `test-low` -- test code for the low-level API where the functions have long
   scary-looking names
 * `test-high` -- test code for the high-level API where the functions have
