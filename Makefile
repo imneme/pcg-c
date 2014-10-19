@@ -41,6 +41,7 @@ clean:
 	cd src; $(MAKE) clean
 	cd test-low; $(MAKE) clean
 	cd test-high; $(MAKE) clean
+	cd sample; $(MAKE) clean
 	rm -f extras/*.o
 
 	
