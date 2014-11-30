@@ -1,0 +1,51 @@
+pcg_mcg_64_xsh_rr_32_random_r:
+      -  result:      32-bit unsigned int (uint32_t)
+      -  period:      2^62
+      -  state type:  struct pcg_state_64 (8 bytes)
+      -  output func: XSH-RR
+
+Round 1:
+  32bit: 0x00000000 0x21b756ee 0x135e80e8 0xf6025706 0xd2fc74a3 0x157c82ab
+  Again: 0x00000000 0x21b756ee 0x135e80e8 0xf6025706 0xd2fc74a3 0x157c82ab
+  Coins: TTHTHHHTTTTHHTTTHTHTHTTTHTTTHHTHTHTTHTHTTHTTTHTHTHHTTHTTHHTTTHHHH
+  Rolls: 3 2 3 6 4 4 5 1 1 5 6 6 4 2 6 3 5 2 5 4 4 5 1 5 2 3 3 5 1 5 5 2 4
+  Cards: 9s 7h 3c Td 2c 9c 6d 4s 5c Qd 9h As Kd 6c 6h 4d 2s 2h 8d 8c Jc 9d
+	 7d Qc 8h 5d Tc 7c Js Kc 8s 5s 4h Qh Ac 3d 3s Qs 2d Ts Jh Jd 7s Kh
+	 Th Ks Ad 3h 5h 6s 4c Ah
+
+Round 2:
+  32bit: 0x80e7557b 0x42a225c3 0x491905a0 0xaff35cc1 0x9acc8e9e 0xbf71ac61
+  Again: 0x80e7557b 0x42a225c3 0x491905a0 0xaff35cc1 0x9acc8e9e 0xbf71ac61
+  Coins: HHTHTHTTHHTHHHTHTTTTTTTHHTHTHTHTTHHTTTTTHTTHHTTTHHHHTTHTTHTTTHTHT
+  Rolls: 6 1 3 6 5 2 4 4 1 5 4 4 6 2 5 4 5 4 2 4 6 2 3 2 4 6 4 2 5 3 1 2 2
+  Cards: Kc 9s 5d 2d 8s 7s As Ah 6s 9c 3c 6h Ks 4h Ts 4c 6c 3h 7c 3s Tc Th
+	 Qd Td Ac 7d 9h 5h 9d Ad 8h 5c 4s 4d 6d Kh 8d Qs Jh Jd 2h 5s Js Qc
+	 2c Kd 7h Qh Jc 8c 3d 2s
+
+Round 3:
+  32bit: 0xa6ca9bb3 0x5e794c5f 0xd91e8dea 0x6d1b01e0 0xed648d6e 0x2d62f914
+  Again: 0xa6ca9bb3 0x5e794c5f 0xd91e8dea 0x6d1b01e0 0xed648d6e 0x2d62f914
+  Coins: HHHTHTTHHTHTTHTTTHHHHTTHTTTHTHHHHHTTHHTHHHHHTTTTTTHHTHTHHTTHTTHTT
+  Rolls: 1 1 3 2 6 2 3 6 3 3 1 5 2 3 1 6 4 6 5 5 6 5 2 5 1 3 4 1 4 2 2 5 2
+  Cards: Ts 3c 2d 8d Jc As Qh Ac 7s Qd Js Jh Ah 3s 6d 6h 9d 8c 9s 5c 6c Ks
+	 Tc 3h 4s Td Ad 9c 7d 7c Kd Qc 2s 4d 9h 6s 3d 5s Kc Jd 8s 2c 5d 4c
+	 7h Kh Qs 4h 8h Th 2h 5h
+
+Round 4:
+  32bit: 0xe5636001 0x7897fd80 0x159d7d4e 0x205372a2 0x1d7d2c90 0x80c47703
+  Again: 0xe5636001 0x7897fd80 0x159d7d4e 0x205372a2 0x1d7d2c90 0x80c47703
+  Coins: TTHHHHTHTTTHTHHHTTHHTHTHHTHHTHHTHTTTTHTHTTTHHTTHHHTHTHHTHTTHTTHTT
+  Rolls: 5 2 3 2 5 6 3 4 3 6 2 1 1 2 4 3 1 3 2 5 2 5 5 3 1 1 4 3 1 4 5 6 5
+  Cards: 4c 6d Ah Th 6s 3h Ad 2h 4d Qd Kh Ks 8h 7c 5d Ts 4s 5c 6c 2d 7h As
+	 7s Jh 2s 2c Js 3d Kc Ac Qh 4h Kd 8c 6h 8s 3s 3c 9s 7d 9d 8d Tc Jd
+	 9c 5h 9h Qc 5s Td Jc Qs
+
+Round 5:
+  32bit: 0x26e226c0 0xb649612d 0x6eda901b 0x51d09754 0xe32439c9 0xe82fd0b1
+  Again: 0x26e226c0 0xb649612d 0x6eda901b 0x51d09754 0xe32439c9 0xe82fd0b1
+  Coins: TTHTTTHHTTTHTTTTHHHHHTHTHTTHHHTHTTTTHHTTHTHTTHTTTTHTHTHTHTTHTHTTT
+  Rolls: 3 6 5 6 5 6 1 1 2 2 1 3 6 5 2 5 2 6 1 4 5 4 5 4 2 6 1 2 3 1 5 2 1
+  Cards: 5d 5c 9s Js 2s Jh 3h 4h 3s Ts Jd Ks 2h 6c 8c 4s Td 8d 3d 5s Ad 7h
+	 4d 2d As Kc Qc Qd 3c Jc 6h 9d 6d 8h 9h 4c Kd Qh 7d 9c Qs 7c Ah 2c
+	 Tc 6s 5h 8s Kh 7s Ac Th
+
