@@ -57,13 +57,13 @@ rm -f actual/*
 
 find actual -type f -size -64c -delete
 
-if diff -ru expected actual
+if diff -x .gitignore -ru expected actual
 then
     echo All tests succeeded.
 else
     echo ''
     if diff -x "*-pcg64[fsu].out" -x "*-pcg64-global.out" -x "*-pcg64.out" \
-            -x "*-pcg128*.out" -ru expected actual > /dev/null
+            -x "*-pcg128*.out" -x .gitignore -ru expected actual > /dev/null
     then
         echo All tests except tests requiring 128-bit math succceed.
     else

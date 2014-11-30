@@ -120,12 +120,12 @@ rm -f actual/*
 
 find actual -type f -size -64c -delete
 
-if diff -ru expected actual
+if diff -x .gitignore -ru expected actual
 then
     echo All tests succeeded.
 else
     echo ''
-    if diff -x "*-128-*" -ru expected actual > /dev/null
+    if diff -x "*-128-*" -x .gitignore -ru expected actual > /dev/null
     then
         echo All tests except 128-bit tests succceed.
     else
