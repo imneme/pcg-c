@@ -5,47 +5,47 @@ pcg_setseq_16_rxs_m_xs_16_random_r:
       -  output func: RXS-M-XS
 
 Round 1:
-  16bit: 0xa9cf 0x42a8 0x7c32 0xa6da 0xbcf5 0xa615 0x901c 0x3760 0xf924 0xcf8a
-  Again: 0xa9cf 0x42a8 0x7c32 0xa6da 0xbcf5 0xa615 0x901c 0x3760 0xf924 0xcf8a
-  Coins: HHTTHHTTHHHTTHHHTTHHTHTTTTHHTTHTTHHHHHHHHHTHTHTHTHHHTTTTHHHTHHTHH
-  Rolls: 2 6 3 6 6 1 2 6 2 1 5 2 3 2 3 3 1 1 3 3 2 3 4 6 2 3 5 4 1 6 6 5 1
-  Cards: Td 6d Ac 2h Qd 5s 3h Ks Th 3s 4c Jh Ad 9h 3d Js 3c 9d 5h Jd 7h 2c
-	 7s 2s 6h 4d Ts 4s Qc Jc As 6c Ah 8d Qs 7d 5d Kh 9c 8s Kc 8h Tc 5c
-	 7c 4h Kd 9s 2d Qh 8c 6s
+  16bit: 0x9bec 0x5957 0x960e 0xd08d 0x4e05 0xde00 0x03f7 0x1fa6 0xee22 0xf6fa
+  Again: 0x9bec 0x5957 0x960e 0xd08d 0x4e05 0xde00 0x03f7 0x1fa6 0xee22 0xf6fa
+  Coins: HTTHTTTHTTHTTHHHTTHHTTTTHTHHTHHTHTTHHHTTHTTHTHHTTTHTHTTHTHTHHTHTT
+  Rolls: 3 2 1 6 1 4 1 3 6 4 4 4 3 1 6 4 3 6 3 5 2 6 5 2 4 4 2 4 1 2 1 4 4
+  Cards: 3s 7c Td 2h Js 5s 2s 6h 7d As Ad 9c Kc Ah Jc Ks Qc 8s 6s 9h 8d Qh
+	 3h Kd Kh 5h 7s 3c 4h 9s 8h 7h 9d 6d Tc Ts 3d Jd Qs 5c Qd 5d Jh 2c
+	 4s 2d 6c 4c Th Ac 4d 8c
 
 Round 2:
-  16bit: 0x9bba 0x33b1 0xc085 0x6687 0x889b 0xe169 0xe37e 0x0bc6 0xce41 0x0d37
-  Again: 0x9bba 0x33b1 0xc085 0x6687 0x889b 0xe169 0xe37e 0x0bc6 0xce41 0x0d37
-  Coins: TTTHTHTTHHHTTTTTTTTHHHTTHTHHTTHHHTHHTHTTTTHHHHTTHHHTTHTHHTHTHHHHT
-  Rolls: 2 2 6 6 1 4 5 5 5 5 6 5 4 1 5 3 3 3 6 3 3 4 2 6 6 4 6 6 2 3 3 2 6
-  Cards: 5d 3c 6s Th Ts 5s 2d 2s Ad 8h 7d 9s Qd Js Qs 9h 8s As Kc Jc 7c 3s
-	 Jd Ah 6d 8c Jh Ks 5h Td Qc Tc 2c 6h 3h 2h 4h Ac 9d Kd 8d 7s 3d 6c
-	 4s Qh 4c 9c 4d Kh 7h 5c
+  16bit: 0x29e4 0x64d7 0x6452 0xbb27 0x6d56 0x15fd 0xde82 0x6cef 0x283e 0x8b82
+  Again: 0x29e4 0x64d7 0x6452 0xbb27 0x6d56 0x15fd 0xde82 0x6cef 0x283e 0x8b82
+  Coins: HTHTTTTTTHHHHHTTTTTTTHTHTHHHTHTHHTTHTHHHHTHHTHTHHTTTHTTTTTHHTHTTT
+  Rolls: 3 5 6 2 4 3 1 5 3 4 5 5 1 1 4 6 3 4 3 4 3 4 1 6 3 5 1 6 3 4 5 5 5
+  Cards: 8c 8d Qd 2s 9d Kh 5c 3h Ah 7d 9h As Js 7h Th 2h Jc Ad 6h 7s 2d 7c
+	 6s 3c Tc Ts 9c 8h Jd 4h Kd 9s 6c 3d 6d 5h 4s Qh Ks Td 5s Ac 3s 5d
+	 4d 2c Jh Qs 8s 4c Kc Qc
 
 Round 3:
-  16bit: 0xb2e6 0x2a3b 0xd6ec 0x8424 0xcdc2 0x2e39 0x51a2 0x783d 0x8911 0xbca5
-  Again: 0xb2e6 0x2a3b 0xd6ec 0x8424 0xcdc2 0x2e39 0x51a2 0x783d 0x8911 0xbca5
-  Coins: THHTHHHHHHTHHTHTHTHHHTHTHHHHHTTTHHTHTHHTTTHTTHHTTTTTHHTTTHTHHTHTH
-  Rolls: 2 6 3 3 2 1 1 4 5 1 5 1 6 1 5 1 6 3 1 1 4 6 3 5 6 1 3 2 4 2 2 6 5
-  Cards: Qd 3s 3c 3h Kh As 8d 9h 4d 8h Ks Th 2c 2s 4c 7s 3d Td 2h Ac 6h 8c
-	 6c 5s 9s 7c Jh 9d 5c Qs 5d Ad Kc 6s Js Qh 7d 2d 9c Jd Kd 5h Jc Ah
-	 4h 7h 8s Tc Ts Qc 6d 4s
+  16bit: 0xd6fb 0x70d8 0xf204 0xb92b 0x278b 0x871f 0x8b5e 0x9425 0x7d5b 0xfd3f
+  Again: 0xd6fb 0x70d8 0xf204 0xb92b 0x278b 0x871f 0x8b5e 0x9425 0x7d5b 0xfd3f
+  Coins: TTTHTTHHTTTHHHHTHTTTTHTTHTTTHHHHTTTTTTTTHTTTTTTHHHTHTTTHHTHTHHHHH
+  Rolls: 3 2 6 4 2 4 5 1 5 6 6 5 4 6 5 1 2 4 3 5 1 3 6 6 5 3 2 3 5 1 2 5 6
+  Cards: 6s Kh Jh 7h 4c 8h 6c 5c 6h Qh 8d Ts 4h 3d 8s 5d Kd Jc 6d Jd Tc Js
+	 3c 9d 9c 2s Kc 4s Qs 5h Ac 5s 2h 7d 9h 2d 8c Ah Td Qd Th Qc Ad 9s
+	 3s 7s As 3h 4d Ks 7c 2c
 
 Round 4:
-  16bit: 0x8c4a 0xdb4a 0xceed 0x3ae4 0x8290 0xeb6a 0xd3e9 0xd52d 0x5b0c 0x9335
-  Again: 0x8c4a 0xdb4a 0xceed 0x3ae4 0x8290 0xeb6a 0xd3e9 0xd52d 0x5b0c 0x9335
-  Coins: THHTHHHTHHTHHHHTTHTHHHTHHHTTHTHHTHHTTHHHHHHTTHTHHTHTHTTHTHTTHTHTT
-  Rolls: 1 2 3 4 1 3 6 3 6 4 5 3 5 6 6 1 2 3 2 6 6 5 2 2 5 4 1 4 1 6 3 4 3
-  Cards: 6h Qs 7h Ts 4h 9c Jd Kh 5c Ah 7d Qh 5h 5s Th 4c 2s 6d Jh 5d Ad 8c
-	 8h Jc 9d Tc 2d Qc 8d 8s Td 3s 3h Ac Kc 4d Ks 9s 6s 2h Qd 2c Js 9h
-	 3c 4s 7s 7c Kd 6c As 3d
+  16bit: 0xbeed 0x5642 0xd0ae 0xb1d3 0xce66 0x2981 0x4603 0x25d2 0x0ceb 0x663f
+  Again: 0xbeed 0x5642 0xd0ae 0xb1d3 0xce66 0x2981 0x4603 0x25d2 0x0ceb 0x663f
+  Coins: THTHTHHTHTTHHTTTTTHHTTTTTTHTTHTHHTTTHTTHHHHHHTTHHTHHTHTHTTHTTHTTH
+  Rolls: 2 2 2 5 1 2 6 6 3 3 3 3 1 4 4 6 4 1 1 2 4 1 3 3 2 2 3 4 2 1 3 4 5
+  Cards: 9s Ad As 5s Kc Kh 4h Js 6h 7h 3h 2d 7s 8h 2s 2h 5c Jh 9c Th Ts 4c
+	 8s Qh 5h 4d Ac 8d Jd 8c 4s Ah 6c Td 2c 6s Ks 6d 3c 9h 5d Jc 3d Kd
+	 Qc Qs Qd 7d 7c Tc 3s 9d
 
 Round 5:
-  16bit: 0x62a0 0x3011 0x56e2 0xc56b 0xa412 0x9325 0x36bb 0xea15 0xf813 0x31ad
-  Again: 0x62a0 0x3011 0x56e2 0xc56b 0xa412 0x9325 0x36bb 0xea15 0xf813 0x31ad
-  Coins: HHHHHHHHTHTHHHHTTTHTTTTTTHHHHHHHHHHTHHTHHHHHTTTHTHTHHHHHTHTTTHTHH
-  Rolls: 4 1 1 3 6 1 4 6 3 2 6 4 5 5 2 1 1 4 6 2 4 2 1 1 6 6 6 4 1 3 5 1 2
-  Cards: 9c 8d Ac 4h 3c As Ks 3h Qd 7s 9h 4d Jc Kc Th 8c Kh 8h 2h 6s 5h 6d
-	 Qs 4c 2s Td Kd Ad Ah 6h 3d 8s 4s 7c 3s Qh 2c 7d Qc Ts 9s 5s 2d 5c
-	 6c Jh 9d Js 5d 7h Tc Jd
+  16bit: 0xfb1b 0x5e15 0x7904 0xc4f7 0xef7f 0x2e2d 0x876a 0xe777 0x3def 0x5042
+  Again: 0xfb1b 0x5e15 0x7904 0xc4f7 0xef7f 0x2e2d 0x876a 0xe777 0x3def 0x5042
+  Coins: HTTHTHTTHTTTHHHHTTTHHTTHTTTTTHHTHHTTTTHTHTTTTHTTHHHTTTTHTHTTTHTHH
+  Rolls: 3 4 4 4 3 5 5 2 2 1 3 5 3 6 2 6 5 4 3 6 5 5 2 6 4 2 3 4 6 3 5 3 2
+  Cards: Jh Qd 5h 4h Kd 3d Js 4s Kh 9s 2s 2c 3h Qs Ks 7h 5d Kc 8s 4c 6s 9d
+	 Qc 9c Tc Ah 3s 3c Ac As Td 8d Qh 7d Jd 5c 6d Ad 6c 8h Jc 2d 6h 7c
+	 8c Ts 2h 9h Th 7s 5s 4d
 
