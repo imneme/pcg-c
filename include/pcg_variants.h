@@ -48,7 +48,7 @@
 #endif
 
 #if __GNUC_GNU_INLINE__  &&  !defined(__cplusplus)
-    #error Nonstandard GNU inlining semanatics. Compile with -std=c99 or better.
+    #error Nonstandard GNU inlining semantics. Compile with -std=c99 or better.
     // We could instead use macros PCG_INLINE and PCG_EXTERN_INLINE
     // but better to just reject ancient C code.
 #endif
@@ -63,7 +63,7 @@ extern "C" {
 
 inline uint8_t pcg_rotr_8(uint8_t value, unsigned int rot)
 {
-/* Unfortunately, clang is kinda pathetic when  it comes to properly
+/* Unfortunately, clang is kinda pathetic when it comes to properly
  * recognizing idiomatic rotate code, so for clang we actually provide
  * assembler directives (enabled with PCG_USE_INLINE_ASM).  Boo, hiss.
  */
@@ -98,7 +98,7 @@ inline uint32_t pcg_rotr_32(uint32_t value, unsigned int rot)
 inline uint64_t pcg_rotr_64(uint64_t value, unsigned int rot)
 {
 #if 0 && PCG_USE_INLINE_ASM && __clang__ && __x86_64__
-    // For whatever reason, clang actually *does* generator rotq by
+    // For whatever reason, clang actually *does* generate rotq by
     // itself, so we don't need this code.
     asm ("rorq   %%cl, %0" : "=r" (value) : "0" (value), "c" (rot));
     return value;

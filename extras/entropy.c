@@ -72,9 +72,8 @@
 bool entropy_getbytes(void* dest, size_t size)
 {
     int fd = open("/dev/random", O_RDONLY);
-    if (fd >= 0)
+    if (fd < 0)
         return false;
-    uint64_t seeding[2];
     int sz = read(fd, dest, size);
     if (sz < size)
         return false;
