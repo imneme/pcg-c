@@ -2158,13 +2158,13 @@ typedef struct pcg_state_setseq_128   pcg128i_random_t;
 #define pcg128i_advance_r             pcg_setseq_128_advance_r
 #endif
 
-extern uint32_t pcg32_random();
+extern uint32_t pcg32_random(void);
 extern uint32_t pcg32_boundedrand(uint32_t bound);
 extern void     pcg32_srandom(uint64_t seed, uint64_t seq);
 extern void     pcg32_advance(uint64_t delta);
 
 #if PCG_HAS_128BIT_OPS
-extern uint64_t pcg64_random();
+extern uint64_t pcg64_random(void);
 extern uint64_t pcg64_boundedrand(uint64_t bound);
 extern void     pcg64_srandom(pcg128_t seed, pcg128_t seq);
 extern void     pcg64_advance(pcg128_t delta);

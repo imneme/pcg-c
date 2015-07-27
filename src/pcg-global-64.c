@@ -36,7 +36,7 @@
 
 static pcg64_random_t pcg64_global = PCG64_INITIALIZER;
 
-uint64_t pcg64_random()
+uint64_t pcg64_random(void)
 {
     return pcg64_random_r(&pcg64_global);
 }
