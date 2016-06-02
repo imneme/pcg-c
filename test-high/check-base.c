@@ -39,6 +39,18 @@ int main(int argc, char** argv)
     bool nondeterministic_seed = false;
     
     ++argv; --argc;
+    if (argc > 0 && strcmp( argv[ 0 ], "--redirect-output" ) == 0)
+    {
+        ++argv; --argc;
+        if (argc == 0)
+            return 2;
+        const char *path = argv[ 0 ];
+        ++argv; --argc;
+        if (freopen( path, "wt", stdout ) == NULL)
+            return 1;
+        if (freopen( path, "wt", stderr ) == NULL)
+            return 1;
+    }
     if (argc > 0 && strcmp(argv[0], "-r") == 0) {
          nondeterministic_seed = true;
          ++argv; --argc;
