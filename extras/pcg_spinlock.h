@@ -47,7 +47,7 @@
                 do {} while(__sync_lock_test_and_set(&mutex, 1))
     #define PCG_SPINLOCK_UNLOCK(mutex)  __sync_lock_release(&mutex)
 #else
-    #warning No implementation of spinlocks provided.  No thread safety.
+    #pragma message( "No implementation of spinlocks provided.  No thread safety." )
     #define PCG_SPINLOCK_DECLARE(mutex) volatile int mutex = 0
     #define PCG_SPINLOCK_LOCK(mutex)    \
                 do { while(mutex == 1){} mutex = 1; } while(0)
