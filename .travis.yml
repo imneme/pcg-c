@@ -1,0 +1,20 @@
+# Travis-CI Build
+# see travis-ci.org for details
+
+language: c
+
+# Use the faster container-based infrastructure.
+sudo: false
+
+compiler:
+  - gcc
+  - clang
+  
+env:
+  global:
+    - PGC_C_CONTINUOUS_INTERATION=1
+    - CTEST_OUTPUT_ON_FAILURE=1
+  matrix:
+    - BUILD_TYPE=debug VERBOSE VERBOSE_MAKE=true 
+  
+script: cmake --version && cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_VERBOSE_MAKEFILE=$VERBOSE_MAKE . && make -k all check
