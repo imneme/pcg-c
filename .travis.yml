@@ -6,6 +6,11 @@ language: c
 # Use the faster container-based infrastructure.
 sudo: false
 
+addons:
+  apt:
+    packages:
+    - cmake
+
 compiler:
   - gcc
   - clang
