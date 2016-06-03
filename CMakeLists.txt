@@ -44,7 +44,11 @@ endmacro(use_c99)
 use_c99()
 
 # Notes: could use ${CMAKE_COMMAND} -E compare_files for file comparison, but it does not provide diff on failure :/
-set(DIFF_CMD fc.exe)
+if(WIN32)
+    set(DIFF_CMD fc.exe)
+else(WIN32)
+    set(DIFF_CMD diff)
+endif(WIN32)
 
 macro (add_compare_output_test target expected_dir)
    set(ACTUAL_PATH ${target}-actual.txt)
