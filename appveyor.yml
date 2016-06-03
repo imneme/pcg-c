@@ -1,0 +1,24 @@
+environment:
+  matrix:
+    - GENERATOR: "Visual Studio 14 2015"
+      CONFIG: Debug
+
+    - GENERATOR: "Visual Studio 14 2015"
+      CONFIG: Release
+
+    - GENERATOR: "Visual Studio 14 2015 Win64"
+      CONFIG: Debug
+
+    - GENERATOR: "Visual Studio 14 2015 Win64"
+      CONFIG: Release
+
+build_script:
+# See http://stackoverflow.com/questions/31090821/what-does-the-h-option-means-for-cmake
+# -H: sets the source directory for the project
+# -B: sets the binary directory
+  - cmake "-G%GENERATOR%" -H. -B_builds
+  - cmake --build _builds --config "%CONFIG%"
+
+test_script:
+  - ps: cd _builds
+  - ctest -VV -C "%CONFIG%"
