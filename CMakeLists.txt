@@ -4,6 +4,8 @@ PROJECT(PCG_c)
 
 enable_testing()
 
+include(CheckCSourceCompiles) 
+
 # Output all libraries and executables in the same directory
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin
     CACHE PATH "Single directory for all libraries.")
@@ -41,7 +43,21 @@ macro (add_compare_output_test target expected_dir)
    set_tests_properties( ${target}-compare PROPERTIES DEPENDS ${target})
 endmacro (add_compare_output_test)
 
+# Detect if compiler support non-standard __uint128_t type
+CHECK_C_SOURCE_COMPILES(
+"
+#include <pcg_variants.h>
+int main(void) {
+#ifdef PCG_HAS_128BIT_OPS
+return 0;
+#else
+pgc_128bit_not_supported; /* cause syntax error */
+#endif
+}
+" 
+PCG_HAS_128BIT_OPS) 
 
+message(STATUS "PCG_HAS_128BIT_OPS=${PCG_HAS_128BIT_OPS}")
 
 add_subdirectory( src/ )
 add_subdirectory( test-low/ )
