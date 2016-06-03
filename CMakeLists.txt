@@ -31,6 +31,17 @@ if(MSVC)
   add_definitions( -D_CRT_SECURE_NO_WARNINGS )
 endif(MSVC)
 
+macro(use_c99)
+  if (CMAKE_VERSION VERSION_LESS "3.1")
+    if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
+      set (CMAKE_C_FLAGS "--std=c99 ${CMAKE_C_FLAGS}")
+    endif ()
+  else ()
+    set (CMAKE_C_STANDARD 99)
+  endif ()
+endmacro(use_c99)
+
+use_c99()
 
 # Notes: could use ${CMAKE_COMMAND} -E compare_files for file comparison, but it does not provide diff on failure :/
 set(DIFF_CMD fc.exe)
