@@ -2,9 +2,9 @@
 
 [PCG-Random website]: http://www.pcg-random.org
 
-[![Build Status](https://travis-ci.org/blep/pcg-c.svg?branch=master)](https://travis-ci.org/blep/pcg-c)
+gcc/clang: [![Build Status](https://travis-ci.org/blep/pcg-c.svg?branch=master)](https://travis-ci.org/blep/pcg-c)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/sboxa87lu2p8et3a/branch/master?svg=true)](https://ci.appveyor.com/project/blep/pcg-c/branch/master)
+Visual Studio 2015: [![Build status](https://ci.appveyor.com/api/projects/status/sboxa87lu2p8et3a/branch/master?svg=true)](https://ci.appveyor.com/project/blep/pcg-c/branch/master)
 
 
 This code provides an implementation of the PCG family of random number

@@ -75,6 +75,7 @@ PCG_HAS_128BIT_OPS)
 message(STATUS "PCG_HAS_128BIT_OPS=${PCG_HAS_128BIT_OPS}")
 
 add_subdirectory( src/ )
+add_subdirectory( sample/ )
 add_subdirectory( test-low/ )
 add_subdirectory( test-high/ )
 
