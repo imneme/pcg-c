@@ -13,6 +13,13 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin
     CACHE PATH "Single directory for all executables.")
 mark_as_advanced( LIBRARY_OUTPUT_PATH EXECUTABLE_OUTPUT_PATH )
 
+if (DEFINED PCG_C_BUILD_SAMPLES)
+  # do nothing, keep already defined values
+else (DEFINED PCG_C_BUILD_SAMPLES)
+  option(PCG_C_BUILD_SAMPLES "Build pgc-c samples" ON)
+  option(PCG_C_BUILD_TESTS "Build pgc-c tests" ON)
+endif (DEFINED PCG_C_BUILD_SAMPLES)
+
 include_directories( include )
 include_directories( extras )
 
@@ -75,9 +82,13 @@ PCG_HAS_128BIT_OPS)
 message(STATUS "PCG_HAS_128BIT_OPS=${PCG_HAS_128BIT_OPS}")
 
 add_subdirectory( src/ )
-add_subdirectory( sample/ )
-add_subdirectory( test-low/ )
-add_subdirectory( test-high/ )
+if (PCG_C_BUILD_SAMPLES)
+    add_subdirectory( sample/ )
+endif (PCG_C_BUILD_SAMPLES)
+if (PCG_C_BUILD_TESTS)
+    add_subdirectory( test-low/ )
+    add_subdirectory( test-high/ )
+endif (PCG_C_BUILD_TESTS)
 
 # only way to "always" get failure detail by default
 if (CMAKE_CONFIGURATION_TYPES)
@@ -88,3 +99,4 @@ else()
     add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} 
         --force-new-ctest-process --output-on-failure)
 endif()
+
