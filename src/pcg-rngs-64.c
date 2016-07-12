@@ -20,8 +20,8 @@
  *
  *       http://www.pcg-random.org
  */
-
-/*
+ 
+/* 
  * This code is derived from the canonical C++ PCG implementation, which
  * has many additional features and is preferable if you can use C++ in
  * your project.
@@ -99,8 +99,8 @@ extern inline void pcg_setseq_64_srandom_r(struct pcg_state_setseq_64* rng,
  *
  *     (Note that using modulo is only wise for good RNGs, poorer RNGs
  *     such as raw LCGs do better using a technique based on division.)
- *     Empirical tests show that division is preferable to modulus for
- *     reducing the range of an RNG.  It's faster, and sometimes it can
+ *     Empricical tests show that division is preferable to modulus for
+ *     reducting the range of an RNG.  It's faster, and sometimes it can
  *     even be statistically prefereable.
  */
 
