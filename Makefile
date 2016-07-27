@@ -27,11 +27,11 @@ all:
 	cd test-high; $(MAKE)
 	cd sample; $(MAKE)
 
-PREFIX = /usr/local
+PREFIX?=/usr/local
 
 install: all
-	install src/libpcg_random.a $PREFIX/lib
-	install -m 0644 include/pcg_variants.h $PREFIX/include
+	install src/libpcg_random.a $(PREFIX)/lib
+	install -m 0644 include/pcg_variants.h $(PREFIX)/include
 
 test:   all
 	cd test-low; $(MAKE) test
