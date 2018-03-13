@@ -4,7 +4,7 @@ set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/cmake/toolchain.cmake"
     CACHE FILEPATH
     "Toolchain to use for building this package and dependencies")
 
-project(pcg VERSION 1.0.0)
+project(pcg VERSION 0.0.0)
 
 include(CTest)
 
