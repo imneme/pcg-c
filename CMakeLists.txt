@@ -205,9 +205,9 @@ install(
 )
 
 # Headers:
-#   * pcg_variants.h -> <prefix>/include/pcg_variants.h
+#   * include/pcg_variants.h -> <prefix>/include/pcg_variants.h
 install(
-    FILES "${CMAKE_CURRENT_SOURCE_DIR}/pcg_variants.h"
+    FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/pcg_variants.h"
     DESTINATION "${include_install_dir}"
 )
 
