@@ -72,10 +72,8 @@ bool entropy_getbytes(void* dest, size_t size)
     int fd = open("/dev/random", O_RDONLY);
     if (fd < 0)
         return false;
-    int sz = read(fd, dest, size);
-    if (sz < size)
-        return false;
-    return close(fd) == 0;
+    ssize_t sz = read(fd, dest, size);
+    return (close(fd) == 0) && (sz == size);
 }
 #else
 bool entropy_getbytes(void* dest, size_t size)
