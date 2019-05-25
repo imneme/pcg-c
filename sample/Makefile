@@ -24,7 +24,7 @@ TARGETS = pcg32-demo pcg32-global-demo pcg32x2-demo pcg64-demo
 LDFLAGS  += -L../src
 LDLIBS   += -lpcg_random
 CPPFLAGS += -I../include -I../extras
-CFLAGS   += -std=c99
+CFLAGS   += -std=c99 -Wall
 
 all: $(TARGETS)
 
