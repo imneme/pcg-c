@@ -28,7 +28,7 @@ TARGETS = check-pcg128i check-pcg128si check-pcg16i check-pcg16si check-pcg32 \
 LDFLAGS  += -L../src
 LDLIBS   += -lpcg_random
 CPPFLAGS += -I../include -I../extras
-CFLAGS   += -std=c99
+CFLAGS   += -std=c99 -Wall
 
 all: $(TARGETS)
 

@@ -53,7 +53,7 @@ TARGETS =   check-mcg-128-xsh-rr-64 check-mcg-128-xsh-rs-64            \
 LDFLAGS  += -L../src
 LDLIBS   += -lpcg_random
 CPPFLAGS += -I../include -I../extras
-CFLAGS   += -std=c99
+CFLAGS   += -std=c99 -Wall
 
 all: $(TARGETS)
 
