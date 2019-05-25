@@ -24,7 +24,7 @@ self explanatory.
 
 The code is written in C99-style C with no significant platform dependencies.
 On a Unix-style system (e.g., Linux, Mac OS X) you should be able to just
-type type
+type
 
     make
 
@@ -63,7 +63,7 @@ The directories are arranged as follows:
 ## 128-bit Math
 
 On systems that support it (64-bit systems using GCC or Clang), the library
-provides RNGs that use 128-bit intger math. These generators produce 64-bit
+provides RNGs that use 128-bit integer math. These generators produce 64-bit
 output (or more) and have a period of 2^128.
 
 If you don't have 128-bit support on your system, you aren't losing that much.
