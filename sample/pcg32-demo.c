@@ -30,11 +30,11 @@
 #include <string.h>
 
 #include "pcg_variants.h"
-#include "entropy.h"                    // Wrapper around /dev/random
+#include "entropy.h"                    /* Wrapper around /dev/random */
 
 int main(int argc, char** argv)
 {
-    // Read command-line options
+    /* Read command-line options */
 
     int rounds = 5;
     bool nondeterministic_seed = false;
@@ -50,28 +50,28 @@ int main(int argc, char** argv)
         rounds = atoi(argv[0]);
     }
 
-    // In this version of the code, we'll use a local rng, rather than the
-    // global one.
+    /* In this version of the code, we'll use a local rng, rather than the */
+    /* global one. */
 
     pcg32_random_t rng;
 
-    // You should *always* seed the RNG.  The usual time to do it is the
-    // point in time when you create RNG (typically at the beginning of the
-    // program).
-    //
-    // pcg32_srandom_r takes two 64-bit constants (the initial state, and the
-    // rng sequence selector; rngs with different sequence selectors will
-    // *never* have random sequences that coincide, at all) - the code below
-    // shows three possible ways to do so.
+    /* You should *always* seed the RNG.  The usual time to do it is the
+       point in time when you create RNG (typically at the beginning of the
+       program). */
+
+    /* pcg32_srandom_r takes two 64-bit constants (the initial state, and the
+       rng sequence selector; rngs with different sequence selectors will
+       *never* have random sequences that coincide, at all) - the code below
+       shows three possible ways to do so. */
 
     if (nondeterministic_seed) {
-        // Seed with external entropy
+        /* Seed with external entropy */
 
         uint64_t seeds[2];
         entropy_getbytes((void*)seeds, sizeof(seeds));
         pcg32_srandom_r(&rng, seeds[0], seeds[1]);
     } else {
-        // Seed with a fixed constant
+        /* Seed with a fixed constant */
 
         pcg32_srandom_r(&rng, 42u, 54u);
     }
