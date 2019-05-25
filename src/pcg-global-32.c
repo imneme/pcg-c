@@ -32,7 +32,7 @@
 
 static pcg32_random_t pcg32_global = PCG32_INITIALIZER;
 
-uint32_t pcg32_random()
+uint32_t pcg32_random(void)
 {
     return pcg32_random_r(&pcg32_global);
 }
