@@ -47,7 +47,7 @@
 #endif
 #endif
 
-// If HAVE_DEV_RANDOM is set, we use that value, otherwise we guess
+/* If HAVE_DEV_RANDOM is set, we use that value, otherwise we guess */
 #ifndef HAVE_DEV_RANDOM
 #define HAVE_DEV_RANDOM         IS_UNIX
 #endif
@@ -91,10 +91,10 @@ bool entropy_getbytes(void* dest, size_t size)
 
 void fallback_entropy_getbytes(void* dest, size_t size)
 {
-    // Most modern OSs use address-space randomization, meaning that we can
-    // use the address of stack variables and system library code as
-    // initializers.  It's not as good as using /dev/random, but probably
-    // better than using the current time alone.
+    /* Most modern OSs use address-space randomization, meaning that we can
+       use the address of stack variables and system library code as
+       initializers.  It's not as good as using /dev/random, but probably
+       better than using the current time alone. */
 
     static PCG_SPINLOCK_DECLARE(mutex);
     PCG_SPINLOCK_LOCK(mutex);
