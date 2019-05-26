@@ -40,19 +40,19 @@ extern inline uint16_t pcg_rotr_16(uint16_t value, unsigned int rot);
  * Output functions.  These are the core of the PCG generation scheme.
  */
 
-// XSH RS
+/* XSH RS */
 
 extern inline uint16_t pcg_output_xsh_rs_32_16(uint32_t state);
 
-// XSH RR
+/* XSH RR */
 
 extern inline uint16_t pcg_output_xsh_rr_32_16(uint32_t state);
 
-// RXS M XS
+/* RXS M XS */
 
 extern inline uint16_t pcg_output_rxs_m_xs_16_16(uint16_t state);
 
-// XSL RR (only defined for >= 64 bits)
+/* XSL RR (only defined for >= 64 bits) */
 
-// XSL RR RR (only defined for >= 64 bits)
+/* XSL RR RR (only defined for >= 64 bits) */
 

@@ -42,19 +42,19 @@ extern inline pcg128_t pcg_rotr_128(pcg128_t value, unsigned int rot);
  * Output functions.  These are the core of the PCG generation scheme.
  */
 
-// XSH RS
+/* XSH RS */
 
-// XSH RR
+/* XSH RR */
 
-// RXS M XS
+/* RXS M XS */
 
 #if PCG_HAS_128BIT_OPS
 extern inline pcg128_t pcg_output_rxs_m_xs_128_128(pcg128_t state);
 #endif
 
-// XSL RR (only defined for >= 64 bits)
+/* XSL RR (only defined for >= 64 bits) */
 
-// XSL RR RR (only defined for >= 64 bits)
+/* XSL RR RR (only defined for >= 64 bits) */
 
 #if PCG_HAS_128BIT_OPS
 extern inline pcg128_t pcg_output_xsl_rr_rr_128_128(pcg128_t state);
