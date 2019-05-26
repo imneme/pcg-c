@@ -161,7 +161,7 @@ inline uint32_t pcg_output_xsh_rr_64_32(uint64_t state)
 #if PCG_HAS_128BIT_OPS
 inline uint64_t pcg_output_xsh_rr_128_64(pcg128_t state)
 {
-    return pcg_rotr_64(((state >> 29u) ^ state) >> 58u, state >> 122u);
+    return pcg_rotr_64(((state >> 35u) ^ state) >> 58u, state >> 122u);
 }
 #endif
 
