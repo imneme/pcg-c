@@ -18,14 +18,14 @@
  * For additional information about the PCG random number generation scheme,
  * visit http://www.pcg-random.org/.
  */
- 
-/* 
+
+/*
  * This code is derived from the canonical C++ PCG implementation, which
  * has many additional features and is preferable if you can use C++ in
  * your project.
  *
  * The contents of this file were mechanically derived from pcg_variants.h
- * (every inline function defined there gets an exern declaration here).
+ * (every inline function defined there gets a generated extern declaration).
  */
 
 #include "pcg_variants.h"
