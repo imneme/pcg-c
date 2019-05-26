@@ -1,7 +1,7 @@
 /*
  * PCG Random Number Generation for C.
  *
- * Copyright 2014-2017 Melissa O'Neill <oneill@pcg-random.org>,
+ * Copyright 2014-2019 Melissa O'Neill <oneill@pcg-random.org>,
  *                     and the PCG Project contributors.
  *
  * SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -178,6 +178,32 @@ pcg_setseq_32_rxs_m_xs_32_random_r(struct pcg_state_setseq_32* rng);
 extern inline uint32_t
 pcg_setseq_32_rxs_m_xs_32_boundedrand_r(struct pcg_state_setseq_32* rng,
                                         uint32_t bound);
+
+/* Generation functions for RXS M */
+
+extern inline uint16_t
+pcg_oneseq_32_rxs_m_16_random_r(struct pcg_state_32* rng);
+
+extern inline uint16_t
+pcg_oneseq_32_rxs_m_16_boundedrand_r(struct pcg_state_32* rng, uint16_t bound);
+
+extern inline uint16_t
+pcg_unique_32_rxs_m_16_random_r(struct pcg_state_32* rng);
+
+extern inline uint16_t
+pcg_unique_32_rxs_m_16_boundedrand_r(struct pcg_state_32* rng, uint16_t bound);
+
+extern inline uint16_t
+pcg_setseq_32_rxs_m_16_random_r(struct pcg_state_setseq_32* rng);
+
+extern inline uint16_t
+pcg_setseq_32_rxs_m_16_boundedrand_r(struct pcg_state_setseq_32* rng,
+                                     uint16_t bound);
+
+extern inline uint16_t pcg_mcg_32_rxs_m_16_random_r(struct pcg_state_32* rng);
+
+extern inline uint16_t
+pcg_mcg_32_rxs_m_16_boundedrand_r(struct pcg_state_32* rng, uint16_t bound);
 
 /* Generation functions for XSL RR (only defined for "large" types) */
 

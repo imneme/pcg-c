@@ -19,34 +19,42 @@
 # visit http://www.pcg-random.org/.
 #
 
-TARGETS =   check-mcg-128-xsh-rr-64 check-mcg-128-xsh-rs-64            \
-            check-mcg-128-xsl-rr-64 check-mcg-16-xsh-rr-8              \
-            check-mcg-16-xsh-rs-8 check-mcg-32-xsh-rr-16               \
-            check-mcg-32-xsh-rs-16 check-mcg-64-xsh-rr-32              \
+TARGETS =   check-mcg-128-rxs-m-64 check-mcg-128-xsh-rr-64             \
+            check-mcg-128-xsh-rs-64 check-mcg-128-xsl-rr-64            \
+            check-mcg-16-rxs-m-8 check-mcg-16-xsh-rr-8                 \
+            check-mcg-16-xsh-rs-8 check-mcg-32-rxs-m-16                \
+            check-mcg-32-xsh-rr-16 check-mcg-32-xsh-rs-16              \
+            check-mcg-64-rxs-m-32 check-mcg-64-xsh-rr-32               \
             check-mcg-64-xsh-rs-32 check-mcg-64-xsl-rr-32              \
-            check-oneseq-128-rxs-m-xs-128 check-oneseq-128-xsh-rr-64   \
-            check-oneseq-128-xsh-rs-64 check-oneseq-128-xsl-rr-64      \
-            check-oneseq-128-xsl-rr-rr-128 check-oneseq-16-rxs-m-xs-16 \
+            check-oneseq-128-rxs-m-64 check-oneseq-128-rxs-m-xs-128    \
+            check-oneseq-128-xsh-rr-64 check-oneseq-128-xsh-rs-64      \
+            check-oneseq-128-xsl-rr-64 check-oneseq-128-xsl-rr-rr-128  \
+            check-oneseq-16-rxs-m-8 check-oneseq-16-rxs-m-xs-16        \
             check-oneseq-16-xsh-rr-8 check-oneseq-16-xsh-rs-8          \
-            check-oneseq-32-rxs-m-xs-32 check-oneseq-32-xsh-rr-16      \
-            check-oneseq-32-xsh-rs-16 check-oneseq-64-rxs-m-xs-64      \
+            check-oneseq-32-rxs-m-16 check-oneseq-32-rxs-m-xs-32       \
+            check-oneseq-32-xsh-rr-16 check-oneseq-32-xsh-rs-16        \
+            check-oneseq-64-rxs-m-32 check-oneseq-64-rxs-m-xs-64       \
             check-oneseq-64-xsh-rr-32 check-oneseq-64-xsh-rs-32        \
             check-oneseq-64-xsl-rr-32 check-oneseq-64-xsl-rr-rr-64     \
-            check-oneseq-8-rxs-m-xs-8 check-setseq-128-rxs-m-xs-128    \
-            check-setseq-128-xsh-rr-64 check-setseq-128-xsh-rs-64      \
-            check-setseq-128-xsl-rr-64 check-setseq-128-xsl-rr-rr-128  \
+            check-oneseq-8-rxs-m-xs-8 check-setseq-128-rxs-m-64        \
+            check-setseq-128-rxs-m-xs-128 check-setseq-128-xsh-rr-64   \
+            check-setseq-128-xsh-rs-64 check-setseq-128-xsl-rr-64      \
+            check-setseq-128-xsl-rr-rr-128 check-setseq-16-rxs-m-8     \
             check-setseq-16-rxs-m-xs-16 check-setseq-16-xsh-rr-8       \
-            check-setseq-16-xsh-rs-8 check-setseq-32-rxs-m-xs-32       \
-            check-setseq-32-xsh-rr-16 check-setseq-32-xsh-rs-16        \
+            check-setseq-16-xsh-rs-8 check-setseq-32-rxs-m-16          \
+            check-setseq-32-rxs-m-xs-32 check-setseq-32-xsh-rr-16      \
+            check-setseq-32-xsh-rs-16 check-setseq-64-rxs-m-32         \
             check-setseq-64-rxs-m-xs-64 check-setseq-64-xsh-rr-32      \
             check-setseq-64-xsh-rs-32 check-setseq-64-xsl-rr-32        \
             check-setseq-64-xsl-rr-rr-64 check-setseq-8-rxs-m-xs-8     \
-            check-unique-128-rxs-m-xs-128 check-unique-128-xsh-rr-64   \
-            check-unique-128-xsh-rs-64 check-unique-128-xsl-rr-64      \
-            check-unique-128-xsl-rr-rr-128 check-unique-16-rxs-m-xs-16 \
+            check-unique-128-rxs-m-64 check-unique-128-rxs-m-xs-128    \
+            check-unique-128-xsh-rr-64 check-unique-128-xsh-rs-64      \
+            check-unique-128-xsl-rr-64 check-unique-128-xsl-rr-rr-128  \
+            check-unique-16-rxs-m-8 check-unique-16-rxs-m-xs-16        \
             check-unique-16-xsh-rr-8 check-unique-16-xsh-rs-8          \
-            check-unique-32-rxs-m-xs-32 check-unique-32-xsh-rr-16      \
-            check-unique-32-xsh-rs-16 check-unique-64-rxs-m-xs-64      \
+            check-unique-32-rxs-m-16 check-unique-32-rxs-m-xs-32       \
+            check-unique-32-xsh-rr-16 check-unique-32-xsh-rs-16        \
+            check-unique-64-rxs-m-32 check-unique-64-rxs-m-xs-64       \
             check-unique-64-xsh-rr-32 check-unique-64-xsh-rs-32        \
             check-unique-64-xsl-rr-32 check-unique-64-xsl-rr-rr-64
 
@@ -68,61 +76,77 @@ test: $(TARGETS)
   ../extras/pcg_spinlock.h ../extras/entropy.h
 
 
+check-mcg-128-rxs-m-64: check-mcg-128-rxs-m-64.o ../extras/entropy.o
 check-mcg-128-xsh-rr-64: check-mcg-128-xsh-rr-64.o ../extras/entropy.o
 check-mcg-128-xsh-rs-64: check-mcg-128-xsh-rs-64.o ../extras/entropy.o
 check-mcg-128-xsl-rr-64: check-mcg-128-xsl-rr-64.o ../extras/entropy.o
+check-mcg-16-rxs-m-8: check-mcg-16-rxs-m-8.o ../extras/entropy.o
 check-mcg-16-xsh-rr-8: check-mcg-16-xsh-rr-8.o ../extras/entropy.o
 check-mcg-16-xsh-rs-8: check-mcg-16-xsh-rs-8.o ../extras/entropy.o
+check-mcg-32-rxs-m-16: check-mcg-32-rxs-m-16.o ../extras/entropy.o
 check-mcg-32-xsh-rr-16: check-mcg-32-xsh-rr-16.o ../extras/entropy.o
 check-mcg-32-xsh-rs-16: check-mcg-32-xsh-rs-16.o ../extras/entropy.o
+check-mcg-64-rxs-m-32: check-mcg-64-rxs-m-32.o ../extras/entropy.o
 check-mcg-64-xsh-rr-32: check-mcg-64-xsh-rr-32.o ../extras/entropy.o
 check-mcg-64-xsh-rs-32: check-mcg-64-xsh-rs-32.o ../extras/entropy.o
 check-mcg-64-xsl-rr-32: check-mcg-64-xsl-rr-32.o ../extras/entropy.o
+check-oneseq-128-rxs-m-64: check-oneseq-128-rxs-m-64.o ../extras/entropy.o
 check-oneseq-128-rxs-m-xs-128: check-oneseq-128-rxs-m-xs-128.o ../extras/entropy.o
 check-oneseq-128-xsh-rr-64: check-oneseq-128-xsh-rr-64.o ../extras/entropy.o
 check-oneseq-128-xsh-rs-64: check-oneseq-128-xsh-rs-64.o ../extras/entropy.o
 check-oneseq-128-xsl-rr-64: check-oneseq-128-xsl-rr-64.o ../extras/entropy.o
 check-oneseq-128-xsl-rr-rr-128: check-oneseq-128-xsl-rr-rr-128.o ../extras/entropy.o
+check-oneseq-16-rxs-m-8: check-oneseq-16-rxs-m-8.o ../extras/entropy.o
 check-oneseq-16-rxs-m-xs-16: check-oneseq-16-rxs-m-xs-16.o ../extras/entropy.o
 check-oneseq-16-xsh-rr-8: check-oneseq-16-xsh-rr-8.o ../extras/entropy.o
 check-oneseq-16-xsh-rs-8: check-oneseq-16-xsh-rs-8.o ../extras/entropy.o
+check-oneseq-32-rxs-m-16: check-oneseq-32-rxs-m-16.o ../extras/entropy.o
 check-oneseq-32-rxs-m-xs-32: check-oneseq-32-rxs-m-xs-32.o ../extras/entropy.o
 check-oneseq-32-xsh-rr-16: check-oneseq-32-xsh-rr-16.o ../extras/entropy.o
 check-oneseq-32-xsh-rs-16: check-oneseq-32-xsh-rs-16.o ../extras/entropy.o
+check-oneseq-64-rxs-m-32: check-oneseq-64-rxs-m-32.o ../extras/entropy.o
 check-oneseq-64-rxs-m-xs-64: check-oneseq-64-rxs-m-xs-64.o ../extras/entropy.o
 check-oneseq-64-xsh-rr-32: check-oneseq-64-xsh-rr-32.o ../extras/entropy.o
 check-oneseq-64-xsh-rs-32: check-oneseq-64-xsh-rs-32.o ../extras/entropy.o
 check-oneseq-64-xsl-rr-32: check-oneseq-64-xsl-rr-32.o ../extras/entropy.o
 check-oneseq-64-xsl-rr-rr-64: check-oneseq-64-xsl-rr-rr-64.o ../extras/entropy.o
 check-oneseq-8-rxs-m-xs-8: check-oneseq-8-rxs-m-xs-8.o ../extras/entropy.o
+check-setseq-128-rxs-m-64: check-setseq-128-rxs-m-64.o ../extras/entropy.o
 check-setseq-128-rxs-m-xs-128: check-setseq-128-rxs-m-xs-128.o ../extras/entropy.o
 check-setseq-128-xsh-rr-64: check-setseq-128-xsh-rr-64.o ../extras/entropy.o
 check-setseq-128-xsh-rs-64: check-setseq-128-xsh-rs-64.o ../extras/entropy.o
 check-setseq-128-xsl-rr-64: check-setseq-128-xsl-rr-64.o ../extras/entropy.o
 check-setseq-128-xsl-rr-rr-128: check-setseq-128-xsl-rr-rr-128.o ../extras/entropy.o
+check-setseq-16-rxs-m-8: check-setseq-16-rxs-m-8.o ../extras/entropy.o
 check-setseq-16-rxs-m-xs-16: check-setseq-16-rxs-m-xs-16.o ../extras/entropy.o
 check-setseq-16-xsh-rr-8: check-setseq-16-xsh-rr-8.o ../extras/entropy.o
 check-setseq-16-xsh-rs-8: check-setseq-16-xsh-rs-8.o ../extras/entropy.o
+check-setseq-32-rxs-m-16: check-setseq-32-rxs-m-16.o ../extras/entropy.o
 check-setseq-32-rxs-m-xs-32: check-setseq-32-rxs-m-xs-32.o ../extras/entropy.o
 check-setseq-32-xsh-rr-16: check-setseq-32-xsh-rr-16.o ../extras/entropy.o
 check-setseq-32-xsh-rs-16: check-setseq-32-xsh-rs-16.o ../extras/entropy.o
+check-setseq-64-rxs-m-32: check-setseq-64-rxs-m-32.o ../extras/entropy.o
 check-setseq-64-rxs-m-xs-64: check-setseq-64-rxs-m-xs-64.o ../extras/entropy.o
 check-setseq-64-xsh-rr-32: check-setseq-64-xsh-rr-32.o ../extras/entropy.o
 check-setseq-64-xsh-rs-32: check-setseq-64-xsh-rs-32.o ../extras/entropy.o
 check-setseq-64-xsl-rr-32: check-setseq-64-xsl-rr-32.o ../extras/entropy.o
 check-setseq-64-xsl-rr-rr-64: check-setseq-64-xsl-rr-rr-64.o ../extras/entropy.o
 check-setseq-8-rxs-m-xs-8: check-setseq-8-rxs-m-xs-8.o ../extras/entropy.o
+check-unique-128-rxs-m-64: check-unique-128-rxs-m-64.o ../extras/entropy.o
 check-unique-128-rxs-m-xs-128: check-unique-128-rxs-m-xs-128.o ../extras/entropy.o
 check-unique-128-xsh-rr-64: check-unique-128-xsh-rr-64.o ../extras/entropy.o
 check-unique-128-xsh-rs-64: check-unique-128-xsh-rs-64.o ../extras/entropy.o
 check-unique-128-xsl-rr-64: check-unique-128-xsl-rr-64.o ../extras/entropy.o
 check-unique-128-xsl-rr-rr-128: check-unique-128-xsl-rr-rr-128.o ../extras/entropy.o
+check-unique-16-rxs-m-8: check-unique-16-rxs-m-8.o ../extras/entropy.o
 check-unique-16-rxs-m-xs-16: check-unique-16-rxs-m-xs-16.o ../extras/entropy.o
 check-unique-16-xsh-rr-8: check-unique-16-xsh-rr-8.o ../extras/entropy.o
 check-unique-16-xsh-rs-8: check-unique-16-xsh-rs-8.o ../extras/entropy.o
+check-unique-32-rxs-m-16: check-unique-32-rxs-m-16.o ../extras/entropy.o
 check-unique-32-rxs-m-xs-32: check-unique-32-rxs-m-xs-32.o ../extras/entropy.o
 check-unique-32-xsh-rr-16: check-unique-32-xsh-rr-16.o ../extras/entropy.o
 check-unique-32-xsh-rs-16: check-unique-32-xsh-rs-16.o ../extras/entropy.o
+check-unique-64-rxs-m-32: check-unique-64-rxs-m-32.o ../extras/entropy.o
 check-unique-64-rxs-m-xs-64: check-unique-64-rxs-m-xs-64.o ../extras/entropy.o
 check-unique-64-xsh-rr-32: check-unique-64-xsh-rr-32.o ../extras/entropy.o
 check-unique-64-xsh-rs-32: check-unique-64-xsh-rs-32.o ../extras/entropy.o
@@ -130,25 +154,36 @@ check-unique-64-xsl-rr-32: check-unique-64-xsl-rr-32.o ../extras/entropy.o
 check-unique-64-xsl-rr-rr-64: check-unique-64-xsl-rr-rr-64.o ../extras/entropy.o
 
 
+check-base.o: check-base.c ../extras/entropy.h
+check-mcg-128-rxs-m-64.o: check-mcg-128-rxs-m-64.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-mcg-128-xsh-rr-64.o: check-mcg-128-xsh-rr-64.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-mcg-128-xsh-rs-64.o: check-mcg-128-xsh-rs-64.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-mcg-128-xsl-rr-64.o: check-mcg-128-xsl-rr-64.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-mcg-16-rxs-m-8.o: check-mcg-16-rxs-m-8.c ../include/pcg_variants.h \
+  check-base.c ../extras/entropy.h
 check-mcg-16-xsh-rr-8.o: check-mcg-16-xsh-rr-8.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-mcg-16-xsh-rs-8.o: check-mcg-16-xsh-rs-8.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-mcg-32-rxs-m-16.o: check-mcg-32-rxs-m-16.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-mcg-32-xsh-rr-16.o: check-mcg-32-xsh-rr-16.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-mcg-32-xsh-rs-16.o: check-mcg-32-xsh-rs-16.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-mcg-64-rxs-m-32.o: check-mcg-64-rxs-m-32.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-mcg-64-xsh-rr-32.o: check-mcg-64-xsh-rr-32.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-mcg-64-xsh-rs-32.o: check-mcg-64-xsh-rs-32.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-mcg-64-xsl-rr-32.o: check-mcg-64-xsl-rr-32.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-oneseq-128-rxs-m-64.o: check-oneseq-128-rxs-m-64.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-oneseq-128-rxs-m-xs-128.o: check-oneseq-128-rxs-m-xs-128.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
@@ -160,17 +195,23 @@ check-oneseq-128-xsl-rr-64.o: check-oneseq-128-xsl-rr-64.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-oneseq-128-xsl-rr-rr-128.o: check-oneseq-128-xsl-rr-rr-128.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-oneseq-16-rxs-m-8.o: check-oneseq-16-rxs-m-8.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-oneseq-16-rxs-m-xs-16.o: check-oneseq-16-rxs-m-xs-16.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-oneseq-16-xsh-rr-8.o: check-oneseq-16-xsh-rr-8.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-oneseq-16-xsh-rs-8.o: check-oneseq-16-xsh-rs-8.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-oneseq-32-rxs-m-16.o: check-oneseq-32-rxs-m-16.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-oneseq-32-rxs-m-xs-32.o: check-oneseq-32-rxs-m-xs-32.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-oneseq-32-xsh-rr-16.o: check-oneseq-32-xsh-rr-16.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-oneseq-32-xsh-rs-16.o: check-oneseq-32-xsh-rs-16.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-oneseq-64-rxs-m-32.o: check-oneseq-64-rxs-m-32.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-oneseq-64-rxs-m-xs-64.o: check-oneseq-64-rxs-m-xs-64.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
@@ -184,6 +225,8 @@ check-oneseq-64-xsl-rr-rr-64.o: check-oneseq-64-xsl-rr-rr-64.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-oneseq-8-rxs-m-xs-8.o: check-oneseq-8-rxs-m-xs-8.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-setseq-128-rxs-m-64.o: check-setseq-128-rxs-m-64.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-setseq-128-rxs-m-xs-128.o: check-setseq-128-rxs-m-xs-128.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-setseq-128-xsh-rr-64.o: check-setseq-128-xsh-rr-64.c \
@@ -194,17 +237,23 @@ check-setseq-128-xsl-rr-64.o: check-setseq-128-xsl-rr-64.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-setseq-128-xsl-rr-rr-128.o: check-setseq-128-xsl-rr-rr-128.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-setseq-16-rxs-m-8.o: check-setseq-16-rxs-m-8.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-setseq-16-rxs-m-xs-16.o: check-setseq-16-rxs-m-xs-16.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-setseq-16-xsh-rr-8.o: check-setseq-16-xsh-rr-8.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-setseq-16-xsh-rs-8.o: check-setseq-16-xsh-rs-8.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-setseq-32-rxs-m-16.o: check-setseq-32-rxs-m-16.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-setseq-32-rxs-m-xs-32.o: check-setseq-32-rxs-m-xs-32.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-setseq-32-xsh-rr-16.o: check-setseq-32-xsh-rr-16.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-setseq-32-xsh-rs-16.o: check-setseq-32-xsh-rs-16.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-setseq-64-rxs-m-32.o: check-setseq-64-rxs-m-32.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-setseq-64-rxs-m-xs-64.o: check-setseq-64-rxs-m-xs-64.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
@@ -218,6 +267,8 @@ check-setseq-64-xsl-rr-rr-64.o: check-setseq-64-xsl-rr-rr-64.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-setseq-8-rxs-m-xs-8.o: check-setseq-8-rxs-m-xs-8.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-unique-128-rxs-m-64.o: check-unique-128-rxs-m-64.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-unique-128-rxs-m-xs-128.o: check-unique-128-rxs-m-xs-128.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-unique-128-xsh-rr-64.o: check-unique-128-xsh-rr-64.c \
@@ -228,17 +279,23 @@ check-unique-128-xsl-rr-64.o: check-unique-128-xsl-rr-64.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-unique-128-xsl-rr-rr-128.o: check-unique-128-xsl-rr-rr-128.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-unique-16-rxs-m-8.o: check-unique-16-rxs-m-8.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-unique-16-rxs-m-xs-16.o: check-unique-16-rxs-m-xs-16.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-unique-16-xsh-rr-8.o: check-unique-16-xsh-rr-8.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-unique-16-xsh-rs-8.o: check-unique-16-xsh-rs-8.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-unique-32-rxs-m-16.o: check-unique-32-rxs-m-16.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-unique-32-rxs-m-xs-32.o: check-unique-32-rxs-m-xs-32.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-unique-32-xsh-rr-16.o: check-unique-32-xsh-rr-16.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-unique-32-xsh-rs-16.o: check-unique-32-xsh-rs-16.c \
+  ../include/pcg_variants.h check-base.c ../extras/entropy.h
+check-unique-64-rxs-m-32.o: check-unique-64-rxs-m-32.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h
 check-unique-64-rxs-m-xs-64.o: check-unique-64-rxs-m-xs-64.c \
   ../include/pcg_variants.h check-base.c ../extras/entropy.h

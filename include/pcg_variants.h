@@ -1,7 +1,7 @@
 /*
  * PCG Random Number Generation for C.
  *
- * Copyright 2014-2017 Melissa O'Neill <oneill@pcg-random.org>,
+ * Copyright 2014-2019 Melissa O'Neill <oneill@pcg-random.org>,
  *                     and the PCG Project contributors.
  *
  * SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -200,6 +200,34 @@ inline pcg128_t pcg_output_rxs_m_xs_128_128(pcg128_t state)
                                               12605985483714917081ULL));
     /* 327738287884841127335028083622016905945 */
     return (word >> 86u) ^ word;
+}
+#endif
+
+/* RXS M */
+
+inline uint8_t pcg_output_rxs_m_16_8(uint16_t state)
+{
+    return (((state >> ((state >> 13u) + 3u)) ^ state) * 62169u) >> 8u;
+}
+
+inline uint16_t pcg_output_rxs_m_32_16(uint32_t state)
+{
+    return (((state >> ((state >> 28u) + 4u)) ^ state) * 277803737u) >> 16u;
+}
+
+inline uint32_t pcg_output_rxs_m_64_32(uint64_t state)
+{
+    return (((state >> ((state >> 59u) + 5u)) ^ state)
+               * 12605985483714917081ull) >> 32u;
+}
+
+#if PCG_HAS_128BIT_OPS
+inline uint64_t pcg_output_rxs_m_128_64(pcg128_t state)
+{
+    return (((state >> ((state >> 122u) + 6u)) ^ state)
+               * (PCG_128BIT_CONSTANT(17766728186571221404ULL,
+                                      12605985483714917081ULL))) >> 64u;
+    /* 327738287884841127335028083622016905945 */
 }
 #endif
 
@@ -1737,6 +1765,313 @@ pcg_setseq_128_rxs_m_xs_128_boundedrand_r(struct pcg_state_setseq_128* rng,
     pcg128_t threshold = -bound % bound;
     for (;;) {
         pcg128_t r = pcg_setseq_128_rxs_m_xs_128_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+#endif
+
+/* Generation functions for RXS M */
+
+inline uint8_t pcg_oneseq_16_rxs_m_8_random_r(struct pcg_state_16* rng)
+{
+    uint16_t oldstate = rng->state;
+    pcg_oneseq_16_step_r(rng);
+    return pcg_output_rxs_m_16_8(oldstate);
+}
+
+inline uint8_t pcg_oneseq_16_rxs_m_8_boundedrand_r(struct pcg_state_16* rng,
+                                                   uint8_t bound)
+{
+    uint8_t threshold = ((uint8_t)(-bound)) % bound;
+    for (;;) {
+        uint8_t r = pcg_oneseq_16_rxs_m_8_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+
+inline uint16_t pcg_oneseq_32_rxs_m_16_random_r(struct pcg_state_32* rng)
+{
+    uint32_t oldstate = rng->state;
+    pcg_oneseq_32_step_r(rng);
+    return pcg_output_rxs_m_32_16(oldstate);
+}
+
+inline uint16_t pcg_oneseq_32_rxs_m_16_boundedrand_r(struct pcg_state_32* rng,
+                                                     uint16_t bound)
+{
+    uint16_t threshold = ((uint16_t)(-bound)) % bound;
+    for (;;) {
+        uint16_t r = pcg_oneseq_32_rxs_m_16_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+
+inline uint32_t pcg_oneseq_64_rxs_m_32_random_r(struct pcg_state_64* rng)
+{
+    uint64_t oldstate = rng->state;
+    pcg_oneseq_64_step_r(rng);
+    return pcg_output_rxs_m_64_32(oldstate);
+}
+
+inline uint32_t pcg_oneseq_64_rxs_m_32_boundedrand_r(struct pcg_state_64* rng,
+                                                     uint32_t bound)
+{
+    uint32_t threshold = -bound % bound;
+    for (;;) {
+        uint32_t r = pcg_oneseq_64_rxs_m_32_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+
+#if PCG_HAS_128BIT_OPS
+inline uint64_t pcg_oneseq_128_rxs_m_64_random_r(struct pcg_state_128* rng)
+{
+    pcg_oneseq_128_step_r(rng);
+    return pcg_output_rxs_m_128_64(rng->state);
+}
+#endif
+
+#if PCG_HAS_128BIT_OPS
+inline uint64_t pcg_oneseq_128_rxs_m_64_boundedrand_r(struct pcg_state_128* rng,
+                                                      uint64_t bound)
+{
+    uint64_t threshold = -bound % bound;
+    for (;;) {
+        uint64_t r = pcg_oneseq_128_rxs_m_64_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+#endif
+
+inline uint8_t pcg_unique_16_rxs_m_8_random_r(struct pcg_state_16* rng)
+{
+    uint16_t oldstate = rng->state;
+    pcg_unique_16_step_r(rng);
+    return pcg_output_rxs_m_16_8(oldstate);
+}
+
+inline uint8_t pcg_unique_16_rxs_m_8_boundedrand_r(struct pcg_state_16* rng,
+                                                   uint8_t bound)
+{
+    uint8_t threshold = ((uint8_t)(-bound)) % bound;
+    for (;;) {
+        uint8_t r = pcg_unique_16_rxs_m_8_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+
+inline uint16_t pcg_unique_32_rxs_m_16_random_r(struct pcg_state_32* rng)
+{
+    uint32_t oldstate = rng->state;
+    pcg_unique_32_step_r(rng);
+    return pcg_output_rxs_m_32_16(oldstate);
+}
+
+inline uint16_t pcg_unique_32_rxs_m_16_boundedrand_r(struct pcg_state_32* rng,
+                                                     uint16_t bound)
+{
+    uint16_t threshold = ((uint16_t)(-bound)) % bound;
+    for (;;) {
+        uint16_t r = pcg_unique_32_rxs_m_16_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+
+inline uint32_t pcg_unique_64_rxs_m_32_random_r(struct pcg_state_64* rng)
+{
+    uint64_t oldstate = rng->state;
+    pcg_unique_64_step_r(rng);
+    return pcg_output_rxs_m_64_32(oldstate);
+}
+
+inline uint32_t pcg_unique_64_rxs_m_32_boundedrand_r(struct pcg_state_64* rng,
+                                                     uint32_t bound)
+{
+    uint32_t threshold = -bound % bound;
+    for (;;) {
+        uint32_t r = pcg_unique_64_rxs_m_32_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+
+#if PCG_HAS_128BIT_OPS
+inline uint64_t pcg_unique_128_rxs_m_64_random_r(struct pcg_state_128* rng)
+{
+    pcg_unique_128_step_r(rng);
+    return pcg_output_rxs_m_128_64(rng->state);
+}
+#endif
+
+#if PCG_HAS_128BIT_OPS
+inline uint64_t pcg_unique_128_rxs_m_64_boundedrand_r(struct pcg_state_128* rng,
+                                                      uint64_t bound)
+{
+    uint64_t threshold = -bound % bound;
+    for (;;) {
+        uint64_t r = pcg_unique_128_rxs_m_64_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+#endif
+
+inline uint8_t pcg_setseq_16_rxs_m_8_random_r(struct pcg_state_setseq_16* rng)
+{
+    uint16_t oldstate = rng->state;
+    pcg_setseq_16_step_r(rng);
+    return pcg_output_rxs_m_16_8(oldstate);
+}
+
+inline uint8_t
+pcg_setseq_16_rxs_m_8_boundedrand_r(struct pcg_state_setseq_16* rng,
+                                    uint8_t bound)
+{
+    uint8_t threshold = ((uint8_t)(-bound)) % bound;
+    for (;;) {
+        uint8_t r = pcg_setseq_16_rxs_m_8_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+
+inline uint16_t pcg_setseq_32_rxs_m_16_random_r(struct pcg_state_setseq_32* rng)
+{
+    uint32_t oldstate = rng->state;
+    pcg_setseq_32_step_r(rng);
+    return pcg_output_rxs_m_32_16(oldstate);
+}
+
+inline uint16_t
+pcg_setseq_32_rxs_m_16_boundedrand_r(struct pcg_state_setseq_32* rng,
+                                     uint16_t bound)
+{
+    uint16_t threshold = ((uint16_t)(-bound)) % bound;
+    for (;;) {
+        uint16_t r = pcg_setseq_32_rxs_m_16_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+
+inline uint32_t pcg_setseq_64_rxs_m_32_random_r(struct pcg_state_setseq_64* rng)
+{
+    uint64_t oldstate = rng->state;
+    pcg_setseq_64_step_r(rng);
+    return pcg_output_rxs_m_64_32(oldstate);
+}
+
+inline uint32_t
+pcg_setseq_64_rxs_m_32_boundedrand_r(struct pcg_state_setseq_64* rng,
+                                     uint32_t bound)
+{
+    uint32_t threshold = -bound % bound;
+    for (;;) {
+        uint32_t r = pcg_setseq_64_rxs_m_32_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+
+#if PCG_HAS_128BIT_OPS
+inline uint64_t
+pcg_setseq_128_rxs_m_64_random_r(struct pcg_state_setseq_128* rng)
+{
+    pcg_setseq_128_step_r(rng);
+    return pcg_output_rxs_m_128_64(rng->state);
+}
+#endif
+
+#if PCG_HAS_128BIT_OPS
+inline uint64_t
+pcg_setseq_128_rxs_m_64_boundedrand_r(struct pcg_state_setseq_128* rng,
+                                      uint64_t bound)
+{
+    uint64_t threshold = -bound % bound;
+    for (;;) {
+        uint64_t r = pcg_setseq_128_rxs_m_64_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+#endif
+
+inline uint8_t pcg_mcg_16_rxs_m_8_random_r(struct pcg_state_16* rng)
+{
+    uint16_t oldstate = rng->state;
+    pcg_mcg_16_step_r(rng);
+    return pcg_output_rxs_m_16_8(oldstate);
+}
+
+inline uint8_t pcg_mcg_16_rxs_m_8_boundedrand_r(struct pcg_state_16* rng,
+                                                uint8_t bound)
+{
+    uint8_t threshold = ((uint8_t)(-bound)) % bound;
+    for (;;) {
+        uint8_t r = pcg_mcg_16_rxs_m_8_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+
+inline uint16_t pcg_mcg_32_rxs_m_16_random_r(struct pcg_state_32* rng)
+{
+    uint32_t oldstate = rng->state;
+    pcg_mcg_32_step_r(rng);
+    return pcg_output_rxs_m_32_16(oldstate);
+}
+
+inline uint16_t pcg_mcg_32_rxs_m_16_boundedrand_r(struct pcg_state_32* rng,
+                                                  uint16_t bound)
+{
+    uint16_t threshold = ((uint16_t)(-bound)) % bound;
+    for (;;) {
+        uint16_t r = pcg_mcg_32_rxs_m_16_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+
+inline uint32_t pcg_mcg_64_rxs_m_32_random_r(struct pcg_state_64* rng)
+{
+    uint64_t oldstate = rng->state;
+    pcg_mcg_64_step_r(rng);
+    return pcg_output_rxs_m_64_32(oldstate);
+}
+
+inline uint32_t pcg_mcg_64_rxs_m_32_boundedrand_r(struct pcg_state_64* rng,
+                                                  uint32_t bound)
+{
+    uint32_t threshold = -bound % bound;
+    for (;;) {
+        uint32_t r = pcg_mcg_64_rxs_m_32_random_r(rng);
+        if (r >= threshold)
+            return r % bound;
+    }
+}
+
+#if PCG_HAS_128BIT_OPS
+inline uint64_t pcg_mcg_128_rxs_m_64_random_r(struct pcg_state_128* rng)
+{
+    pcg_mcg_128_step_r(rng);
+    return pcg_output_rxs_m_128_64(rng->state);
+}
+#endif
+
+#if PCG_HAS_128BIT_OPS
+inline uint64_t pcg_mcg_128_rxs_m_64_boundedrand_r(struct pcg_state_128* rng,
+                                                   uint64_t bound)
+{
+    uint64_t threshold = -bound % bound;
+    for (;;) {
+        uint64_t r = pcg_mcg_128_rxs_m_64_random_r(rng);
         if (r >= threshold)
             return r % bound;
     }

@@ -1,7 +1,7 @@
 /*
  * PCG Random Number Generation for C.
  *
- * Copyright 2014-2017 Melissa O'Neill <oneill@pcg-random.org>,
+ * Copyright 2014-2019 Melissa O'Neill <oneill@pcg-random.org>,
  *                     and the PCG Project contributors.
  *
  * SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -51,6 +51,10 @@ extern inline uint32_t pcg_output_xsh_rr_64_32(uint64_t state);
 /* RXS M XS */
 
 extern inline uint32_t pcg_output_rxs_m_xs_32_32(uint32_t state);
+
+/* RXS M */
+
+extern inline uint32_t pcg_output_rxs_m_64_32(uint64_t state);
 
 /* XSL RR (only defined for >= 64 bits) */
 

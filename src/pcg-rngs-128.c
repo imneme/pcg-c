@@ -1,7 +1,7 @@
 /*
  * PCG Random Number Generation for C.
  *
- * Copyright 2014-2017 Melissa O'Neill <oneill@pcg-random.org>,
+ * Copyright 2014-2019 Melissa O'Neill <oneill@pcg-random.org>,
  *                     and the PCG Project contributors.
  *
  * SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -251,6 +251,50 @@ pcg_setseq_128_rxs_m_xs_128_random_r(struct pcg_state_setseq_128* rng);
 extern inline pcg128_t
 pcg_setseq_128_rxs_m_xs_128_boundedrand_r(struct pcg_state_setseq_128* rng,
                                           pcg128_t bound);
+#endif
+
+/* Generation functions for RXS M */
+
+#if PCG_HAS_128BIT_OPS
+extern inline uint64_t
+pcg_oneseq_128_rxs_m_64_random_r(struct pcg_state_128* rng);
+#endif
+
+#if PCG_HAS_128BIT_OPS
+extern inline uint64_t
+pcg_oneseq_128_rxs_m_64_boundedrand_r(struct pcg_state_128* rng,
+                                      uint64_t bound);
+#endif
+
+#if PCG_HAS_128BIT_OPS
+extern inline uint64_t
+pcg_unique_128_rxs_m_64_random_r(struct pcg_state_128* rng);
+#endif
+
+#if PCG_HAS_128BIT_OPS
+extern inline uint64_t
+pcg_unique_128_rxs_m_64_boundedrand_r(struct pcg_state_128* rng,
+                                      uint64_t bound);
+#endif
+
+#if PCG_HAS_128BIT_OPS
+extern inline uint64_t
+pcg_setseq_128_rxs_m_64_random_r(struct pcg_state_setseq_128* rng);
+#endif
+
+#if PCG_HAS_128BIT_OPS
+extern inline uint64_t
+pcg_setseq_128_rxs_m_64_boundedrand_r(struct pcg_state_setseq_128* rng,
+                                      uint64_t bound);
+#endif
+
+#if PCG_HAS_128BIT_OPS
+extern inline uint64_t pcg_mcg_128_rxs_m_64_random_r(struct pcg_state_128* rng);
+#endif
+
+#if PCG_HAS_128BIT_OPS
+extern inline uint64_t
+pcg_mcg_128_rxs_m_64_boundedrand_r(struct pcg_state_128* rng, uint64_t bound);
 #endif
 
 /* Generation functions for XSL RR (only defined for "large" types) */
