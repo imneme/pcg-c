@@ -73,7 +73,7 @@ bool entropy_getbytes(void* dest, size_t size)
     if (fd < 0)
         return false;
     ssize_t sz = read(fd, dest, size);
-    return (close(fd) == 0) && (sz == size);
+    return (close(fd) == 0) && (sz == (ssize_t) size);
 }
 #else
 bool entropy_getbytes(void* dest, size_t size)
