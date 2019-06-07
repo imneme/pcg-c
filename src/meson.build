@@ -46,5 +46,5 @@ src_pcg_random_alib	= static_library('pcg_random', src_pcg_random_files
 								, include_directories : include_include
 								, install : true)
 
-declare_dependency(include_directories : include_include
+pcg_c_dep =	declare_dependency(include_directories : include_include
 				  , link_with : src_pcg_random_alib)
