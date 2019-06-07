@@ -66,6 +66,10 @@ Install/Uninstall project relative to <builddir>
 	DESTDIR=<destdir> ninja -C <builddir> install
 	DESTDIR=<destdir> ninja -C <builddir> uninstall
 
+Run tests
+	
+	ninja -C build test
+
 More information at https://mesonbuild.com.
 
 ## Testing
