@@ -1,5 +1,5 @@
 project('pcg-c', 'c'
-	  , default_options : ['optimize=3', 'lto=true'])
+	  , default_options : ['optimization=3', 'b_lto=true'])
 add_project_arguments('-Wall', '-Wpedantic', language : 'c')
 
 include_include	= include_directories('include')
