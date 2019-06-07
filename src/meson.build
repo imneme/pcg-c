@@ -30,13 +30,17 @@ src_pcg_global_64_file		=	files('pcg-global-64.c')
 
 src_pcg_global_32_file		=	files('pcg-global-32.c')
 src_pcg_global_64_file		=	files('pcg-global-64.c')
-libpcg_random_files	=	[src_pcg_rngs_8_file, src_pcg_rngs_16_file, src_pcg_rngs_32_file
-											, src_pcg_rngs_64_file, src_pcg_rngs_128_file
-					  , src_pcg_advance_8_file, src_pcg_advance_16_file, src_pcg_advance_32_file
-											, src_pcg_advance_64_file, src_pcg_advance_128_file
-					  , src_pcg_output_8_file, src_pcg_output_16_file, src_pcg_output_32_file
-											, src_pcg_output_64_file, src_pcg_output_128_file]
 
-libpcg_random_a	= static_library('libpcg_random', libpcg_random_files
-								, c_args : '-O3 -Wall -pedantic'
+src_pcg_random_files		=	[src_pcg_rngs_8_file, src_pcg_rngs_16_file
+						  		, src_pcg_rngs_32_file, src_pcg_rngs_64_file
+						  		, src_pcg_rngs_128_file
+						  		, src_pcg_advance_8_file, src_pcg_advance_16_file
+						  		, src_pcg_advance_32_file, src_pcg_advance_64_file
+						  		, src_pcg_advance_128_file
+						  		, src_pcg_output_8_file, src_pcg_output_16_file
+						  		, src_pcg_output_32_file, src_pcg_output_64_file
+						  		, src_pcg_output_128_file
+						  		, src_pcg_global_32_file, src_pcg_global_64_file]
+
+src_pcg_random_alib	= static_library('pcg_random', src_pcg_random_files
 								, include_directories : include_include)

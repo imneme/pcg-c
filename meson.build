@@ -1,4 +1,5 @@
-project("pcg-c", "c")
+project('pcg-c', 'c')
+add_project_arguments('-Wall', '-Wpedantic', language : 'c')
 
 include_include	= include_directories('include')
 include_extras	= include_directories('extras')
