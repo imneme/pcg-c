@@ -11,7 +11,7 @@
 #define XX_NUMBITS                  "  64bit:"
 #define XX_NUMVALUES                6
 #define XX_NUMWRAP                  3
-#define XX_PRINT_RNGVAL(value)      printf(" 0x%016llx", value)
+#define XX_PRINT_RNGVAL(value)      printf(" 0x%016" PRIx64 "", value)
 #define XX_RAND_DECL                
 #define XX_SEEDSDECL(seeds)         pcg128_t seeds[2];
 #define XX_SRANDOM_SEEDARGS(seeds)  seeds[0], seeds[1]
