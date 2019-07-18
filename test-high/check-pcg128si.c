@@ -1,7 +1,7 @@
 #define XX_PREDECLS                                                            \
     void print128(pcg128_t value)                                              \
     {                                                                          \
-        printf(" 0x%016llx%016llx", (uint64_t)(value >> 64), (uint64_t)value); \
+        printf(" 0x%016" PRIx64 "%016" PRIx64 "", (uint64_t)(value >> 64), (uint64_t)value); \
     }
 
 #define XX_INFO \

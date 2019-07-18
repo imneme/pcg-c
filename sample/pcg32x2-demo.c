@@ -150,7 +150,7 @@ int main(int argc, char** argv)
         for (int i = 0; i < 6; ++i) {
             if (i > 0 && i % 3 == 0)
                 printf("\n\t");
-            printf(" 0x%016llx", pcg32x2_random_r(&rng));
+            printf(" 0x%016" PRIx64 "", pcg32x2_random_r(&rng));
         }
         printf("\n");
 
@@ -159,7 +159,7 @@ int main(int argc, char** argv)
         for (int i = 0; i < 6; ++i) {
             if (i > 0 && i % 3 == 0)
                 printf("\n\t");
-            printf(" 0x%016llx", pcg32x2_random_r(&rng));
+            printf(" 0x%016" PRIx64 "", pcg32x2_random_r(&rng));
         }
         printf("\n");
 
