@@ -23,10 +23,6 @@ self explanatory.
 ## Building
 
 The code is written in C99-style C with no significant platform dependencies.
-On a Unix-style system (e.g., Linux, Mac OS X) you should be able to just
-type
-
-    make
 
 Almost all the real code is in `include/pcg_variants.h`.  Because the
 individual RNGs have a very small amount of code, they are provided as
@@ -38,6 +34,43 @@ non-inline definitions for all the PCG generators.
 On other systems, it should be straightforward to build a library by
 compiling the files in the src directory.  Or, write your own file giving
 an `extern` declaration for every function you actually use.
+
+### Make
+
+On a Unix-style system (e.g., Linux, Mac OS X) you should be able to just
+type
+
+    make
+
+### Meson
+Create (once) a build directory
+
+	meson setup . <builddir>
+
+Apply any requisite meson configurations (see 
+https://mesonbuild.com/Builtin-options.html).
+
+	meson configure <builddir> <options>
+
+Build the project
+
+	ninja -C <builddir>
+
+Install/Uninstall project
+
+	ninja -C <builddir> install
+	ninja -C <builddir> uninstall
+
+Install/Uninstall project relative to <builddir>
+
+	DESTDIR=<destdir> ninja -C <builddir> install
+	DESTDIR=<destdir> ninja -C <builddir> uninstall
+
+Run tests
+	
+	ninja -C build test
+
+More information at https://mesonbuild.com.
 
 ## Testing
 
