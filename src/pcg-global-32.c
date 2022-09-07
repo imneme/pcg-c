@@ -49,6 +49,6 @@ void pcg32_srandom(uint64_t seed, uint64_t seq)
 
 void pcg32_advance(uint64_t delta)
 {
-    return pcg32_advance_r(&pcg32_global, delta);
+    pcg32_advance_r(&pcg32_global, delta);
 }
 
