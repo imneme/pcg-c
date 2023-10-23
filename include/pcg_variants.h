@@ -1,22 +1,24 @@
 /*
  * PCG Random Number Generation for C.
  *
- * Copyright 2014-2019 Melissa O'Neill <oneill@pcg-random.org>,
- *                     and the PCG Project contributors.
+ * Copyright 2014 Melissa O'Neill <oneill@pcg-random.org>
  *
- * SPDX-License-Identifier: (Apache-2.0 OR MIT)
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Licensed under the Apache License, Version 2.0 (provided in
- * LICENSE-APACHE.txt and at http://www.apache.org/licenses/LICENSE-2.0)
- * or under the MIT license (provided in LICENSE-MIT.txt and at
- * http://opensource.org/licenses/MIT), at your option. This file may not
- * be copied, modified, or distributed except according to those terms.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Distributed on an "AS IS" BASIS, WITHOUT WARRANTY OF ANY KIND, either
- * express or implied.  See your chosen license for details.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
  * For additional information about the PCG random number generation scheme,
- * visit http://www.pcg-random.org/.
+ * including its license and other licensing options, visit
+ *
+ *     http://www.pcg-random.org
  */
 
 /*
@@ -46,9 +48,9 @@
 #endif
 
 #if __GNUC_GNU_INLINE__  &&  !defined(__cplusplus)
-    #error Nonstandard GNU inlining semantics. Compile with -std=c99 or better.
-    /* We could instead use macros PCG_INLINE and PCG_EXTERN_INLINE
-       but better to just reject ancient C code. */
+    #error Nonstandard GNU inlining semanatics. Compile with -std=c99 or better.
+    // We could instead use macros PCG_INLINE and PCG_EXTERN_INLINE
+    // but better to just reject ancient C code.
 #endif
 
 #if __cplusplus
@@ -58,17 +60,17 @@ extern "C" {
 /*
  * Rotate helper functions.
  */
-
 inline uint8_t pcg_rotr_8(uint8_t value, unsigned int rot)
 {
-/* Unfortunately, clang is kinda pathetic when it comes to properly
- * recognizing idiomatic rotate code, so for clang we actually provide
- * assembler directives (enabled with PCG_USE_INLINE_ASM).  Boo, hiss.
+/* Older versions of this library with older versions of clang and gcc
+ * fail to infer rotation instructions. Inference is preferable to inline
+ * assembly when it works though.
  */
 #if PCG_USE_INLINE_ASM && __clang__ && (__x86_64__  || __i386__)
     asm ("rorb   %%cl, %0" : "=r" (value) : "0" (value), "c" (rot));
     return value;
 #else
+    rot &= 7;
     return (value >> rot) | (value << ((- rot) & 7));
 #endif
 }
@@ -79,6 +81,7 @@ inline uint16_t pcg_rotr_16(uint16_t value, unsigned int rot)
     asm ("rorw   %%cl, %0" : "=r" (value) : "0" (value), "c" (rot));
     return value;
 #else
+    rot &= 15;
     return (value >> rot) | (value << ((- rot) & 15));
 #endif
 }
@@ -89,18 +92,18 @@ inline uint32_t pcg_rotr_32(uint32_t value, unsigned int rot)
     asm ("rorl   %%cl, %0" : "=r" (value) : "0" (value), "c" (rot));
     return value;
 #else
+    rot &= 31;
     return (value >> rot) | (value << ((- rot) & 31));
 #endif
 }
 
 inline uint64_t pcg_rotr_64(uint64_t value, unsigned int rot)
 {
-#if 0 && PCG_USE_INLINE_ASM && __clang__ && __x86_64__
-    /* For whatever reason, clang actually *does* generate rotq by
-       itself, so we don't need this code. */
+#if PCG_USE_INLINE_ASM && __clang__ && __x86_64__
     asm ("rorq   %%cl, %0" : "=r" (value) : "0" (value), "c" (rot));
     return value;
 #else
+    rot &= 63;
     return (value >> rot) | (value << ((- rot) & 63));
 #endif
 }
@@ -108,6 +111,7 @@ inline uint64_t pcg_rotr_64(uint64_t value, unsigned int rot)
 #if PCG_HAS_128BIT_OPS
 inline pcg128_t pcg_rotr_128(pcg128_t value, unsigned int rot)
 {
+    rot &= 127;
     return (value >> rot) | (value << ((- rot) & 127));
 }
 #endif
@@ -116,7 +120,7 @@ inline pcg128_t pcg_rotr_128(pcg128_t value, unsigned int rot)
  * Output functions.  These are the core of the PCG generation scheme.
  */
 
-/* XSH RS */
+// XSH RS
 
 inline uint8_t pcg_output_xsh_rs_16_8(uint16_t state)
 {
@@ -141,7 +145,7 @@ inline uint64_t pcg_output_xsh_rs_128_64(pcg128_t state)
 }
 #endif
 
-/* XSH RR */
+// XSH RR
 
 inline uint8_t pcg_output_xsh_rr_16_8(uint16_t state)
 {
@@ -161,11 +165,11 @@ inline uint32_t pcg_output_xsh_rr_64_32(uint64_t state)
 #if PCG_HAS_128BIT_OPS
 inline uint64_t pcg_output_xsh_rr_128_64(pcg128_t state)
 {
-    return pcg_rotr_64(((state >> 35u) ^ state) >> 58u, state >> 122u);
+    return pcg_rotr_64(((state >> 29u) ^ state) >> 58u, state >> 122u);
 }
 #endif
 
-/* RXS M XS */
+// RXS M XS
 
 inline uint8_t pcg_output_rxs_m_xs_8_8(uint8_t state)
 {
@@ -198,40 +202,12 @@ inline pcg128_t pcg_output_rxs_m_xs_128_128(pcg128_t state)
     pcg128_t word = ((state >> ((state >> 122u) + 6u)) ^ state)
                        * (PCG_128BIT_CONSTANT(17766728186571221404ULL,
                                               12605985483714917081ULL));
-    /* 327738287884841127335028083622016905945 */
+    // 327738287884841127335028083622016905945
     return (word >> 86u) ^ word;
 }
 #endif
 
-/* RXS M */
-
-inline uint8_t pcg_output_rxs_m_16_8(uint16_t state)
-{
-    return (((state >> ((state >> 13u) + 3u)) ^ state) * 62169u) >> 8u;
-}
-
-inline uint16_t pcg_output_rxs_m_32_16(uint32_t state)
-{
-    return (((state >> ((state >> 28u) + 4u)) ^ state) * 277803737u) >> 16u;
-}
-
-inline uint32_t pcg_output_rxs_m_64_32(uint64_t state)
-{
-    return (((state >> ((state >> 59u) + 5u)) ^ state)
-               * 12605985483714917081ull) >> 32u;
-}
-
-#if PCG_HAS_128BIT_OPS
-inline uint64_t pcg_output_rxs_m_128_64(pcg128_t state)
-{
-    return (((state >> ((state >> 122u) + 6u)) ^ state)
-               * (PCG_128BIT_CONSTANT(17766728186571221404ULL,
-                                      12605985483714917081ULL))) >> 64u;
-    /* 327738287884841127335028083622016905945 */
-}
-#endif
-
-/* XSL RR (only defined for >= 64 bits) */
+// XSL RR (only defined for >= 64 bits)
 
 inline uint32_t pcg_output_xsl_rr_64_32(uint64_t state)
 {
@@ -247,7 +223,7 @@ inline uint64_t pcg_output_xsl_rr_128_64(pcg128_t state)
 }
 #endif
 
-/* XSL RR RR (only defined for >= 64 bits) */
+// XSL RR RR (only defined for >= 64 bits)
 
 inline uint64_t pcg_output_xsl_rr_rr_64_64(uint64_t state)
 {
@@ -295,38 +271,38 @@ inline pcg128_t pcg_output_xsl_rr_rr_128_128(pcg128_t state)
  * bizarre reason).
  */
 
+#if PCG_HAS_128BIT_OPS
 #define PCG_STATE_ONESEQ_8_INITIALIZER      { 0xd7U }
 #define PCG_STATE_ONESEQ_16_INITIALIZER     { 0x20dfU }
 #define PCG_STATE_ONESEQ_32_INITIALIZER     { 0x46b56677U }
 #define PCG_STATE_ONESEQ_64_INITIALIZER     { 0x4d595df4d0f33173ULL }
-#if PCG_HAS_128BIT_OPS
 #define PCG_STATE_ONESEQ_128_INITIALIZER                                       \
     { PCG_128BIT_CONSTANT(0xb8dc10e158a92392ULL, 0x98046df007ec0a53ULL) }
 #endif
 
+#if PCG_HAS_128BIT_OPS
 #define PCG_STATE_UNIQUE_8_INITIALIZER      PCG_STATE_ONESEQ_8_INITIALIZER
 #define PCG_STATE_UNIQUE_16_INITIALIZER     PCG_STATE_ONESEQ_16_INITIALIZER
 #define PCG_STATE_UNIQUE_32_INITIALIZER     PCG_STATE_ONESEQ_32_INITIALIZER
 #define PCG_STATE_UNIQUE_64_INITIALIZER     PCG_STATE_ONESEQ_64_INITIALIZER
-#if PCG_HAS_128BIT_OPS
 #define PCG_STATE_UNIQUE_128_INITIALIZER    PCG_STATE_ONESEQ_128_INITIALIZER
 #endif
 
+#if PCG_HAS_128BIT_OPS
 #define PCG_STATE_MCG_8_INITIALIZER         { 0xe5U }
 #define PCG_STATE_MCG_16_INITIALIZER        { 0xa5e5U }
 #define PCG_STATE_MCG_32_INITIALIZER        { 0xd15ea5e5U }
 #define PCG_STATE_MCG_64_INITIALIZER        { 0xcafef00dd15ea5e5ULL }
-#if PCG_HAS_128BIT_OPS
 #define PCG_STATE_MCG_128_INITIALIZER                                          \
     { PCG_128BIT_CONSTANT(0x0000000000000000ULL, 0xcafef00dd15ea5e5ULL) }
 #endif
 
+#if PCG_HAS_128BIT_OPS
 #define PCG_STATE_SETSEQ_8_INITIALIZER      { 0x9bU, 0xdbU }
 #define PCG_STATE_SETSEQ_16_INITIALIZER     { 0xe39bU, 0x5bdbU }
 #define PCG_STATE_SETSEQ_32_INITIALIZER     { 0xec02d89bU, 0x94b95bdbU }
 #define PCG_STATE_SETSEQ_64_INITIALIZER                                        \
     { 0x853c49e6748fea9bULL, 0xda3e39cb94b95bdbULL }
-#if PCG_HAS_128BIT_OPS
 #define PCG_STATE_SETSEQ_128_INITIALIZER                                       \
     { PCG_128BIT_CONSTANT(0x979c9a98d8462005ULL, 0x7d3e9cb6cfe0549bULL),       \
       PCG_128BIT_CONSTANT(0x0000000000000001ULL, 0xda3e39cb94b95bdbULL) }
@@ -1771,313 +1747,6 @@ pcg_setseq_128_rxs_m_xs_128_boundedrand_r(struct pcg_state_setseq_128* rng,
 }
 #endif
 
-/* Generation functions for RXS M */
-
-inline uint8_t pcg_oneseq_16_rxs_m_8_random_r(struct pcg_state_16* rng)
-{
-    uint16_t oldstate = rng->state;
-    pcg_oneseq_16_step_r(rng);
-    return pcg_output_rxs_m_16_8(oldstate);
-}
-
-inline uint8_t pcg_oneseq_16_rxs_m_8_boundedrand_r(struct pcg_state_16* rng,
-                                                   uint8_t bound)
-{
-    uint8_t threshold = ((uint8_t)(-bound)) % bound;
-    for (;;) {
-        uint8_t r = pcg_oneseq_16_rxs_m_8_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-
-inline uint16_t pcg_oneseq_32_rxs_m_16_random_r(struct pcg_state_32* rng)
-{
-    uint32_t oldstate = rng->state;
-    pcg_oneseq_32_step_r(rng);
-    return pcg_output_rxs_m_32_16(oldstate);
-}
-
-inline uint16_t pcg_oneseq_32_rxs_m_16_boundedrand_r(struct pcg_state_32* rng,
-                                                     uint16_t bound)
-{
-    uint16_t threshold = ((uint16_t)(-bound)) % bound;
-    for (;;) {
-        uint16_t r = pcg_oneseq_32_rxs_m_16_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-
-inline uint32_t pcg_oneseq_64_rxs_m_32_random_r(struct pcg_state_64* rng)
-{
-    uint64_t oldstate = rng->state;
-    pcg_oneseq_64_step_r(rng);
-    return pcg_output_rxs_m_64_32(oldstate);
-}
-
-inline uint32_t pcg_oneseq_64_rxs_m_32_boundedrand_r(struct pcg_state_64* rng,
-                                                     uint32_t bound)
-{
-    uint32_t threshold = -bound % bound;
-    for (;;) {
-        uint32_t r = pcg_oneseq_64_rxs_m_32_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-
-#if PCG_HAS_128BIT_OPS
-inline uint64_t pcg_oneseq_128_rxs_m_64_random_r(struct pcg_state_128* rng)
-{
-    pcg_oneseq_128_step_r(rng);
-    return pcg_output_rxs_m_128_64(rng->state);
-}
-#endif
-
-#if PCG_HAS_128BIT_OPS
-inline uint64_t pcg_oneseq_128_rxs_m_64_boundedrand_r(struct pcg_state_128* rng,
-                                                      uint64_t bound)
-{
-    uint64_t threshold = -bound % bound;
-    for (;;) {
-        uint64_t r = pcg_oneseq_128_rxs_m_64_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-#endif
-
-inline uint8_t pcg_unique_16_rxs_m_8_random_r(struct pcg_state_16* rng)
-{
-    uint16_t oldstate = rng->state;
-    pcg_unique_16_step_r(rng);
-    return pcg_output_rxs_m_16_8(oldstate);
-}
-
-inline uint8_t pcg_unique_16_rxs_m_8_boundedrand_r(struct pcg_state_16* rng,
-                                                   uint8_t bound)
-{
-    uint8_t threshold = ((uint8_t)(-bound)) % bound;
-    for (;;) {
-        uint8_t r = pcg_unique_16_rxs_m_8_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-
-inline uint16_t pcg_unique_32_rxs_m_16_random_r(struct pcg_state_32* rng)
-{
-    uint32_t oldstate = rng->state;
-    pcg_unique_32_step_r(rng);
-    return pcg_output_rxs_m_32_16(oldstate);
-}
-
-inline uint16_t pcg_unique_32_rxs_m_16_boundedrand_r(struct pcg_state_32* rng,
-                                                     uint16_t bound)
-{
-    uint16_t threshold = ((uint16_t)(-bound)) % bound;
-    for (;;) {
-        uint16_t r = pcg_unique_32_rxs_m_16_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-
-inline uint32_t pcg_unique_64_rxs_m_32_random_r(struct pcg_state_64* rng)
-{
-    uint64_t oldstate = rng->state;
-    pcg_unique_64_step_r(rng);
-    return pcg_output_rxs_m_64_32(oldstate);
-}
-
-inline uint32_t pcg_unique_64_rxs_m_32_boundedrand_r(struct pcg_state_64* rng,
-                                                     uint32_t bound)
-{
-    uint32_t threshold = -bound % bound;
-    for (;;) {
-        uint32_t r = pcg_unique_64_rxs_m_32_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-
-#if PCG_HAS_128BIT_OPS
-inline uint64_t pcg_unique_128_rxs_m_64_random_r(struct pcg_state_128* rng)
-{
-    pcg_unique_128_step_r(rng);
-    return pcg_output_rxs_m_128_64(rng->state);
-}
-#endif
-
-#if PCG_HAS_128BIT_OPS
-inline uint64_t pcg_unique_128_rxs_m_64_boundedrand_r(struct pcg_state_128* rng,
-                                                      uint64_t bound)
-{
-    uint64_t threshold = -bound % bound;
-    for (;;) {
-        uint64_t r = pcg_unique_128_rxs_m_64_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-#endif
-
-inline uint8_t pcg_setseq_16_rxs_m_8_random_r(struct pcg_state_setseq_16* rng)
-{
-    uint16_t oldstate = rng->state;
-    pcg_setseq_16_step_r(rng);
-    return pcg_output_rxs_m_16_8(oldstate);
-}
-
-inline uint8_t
-pcg_setseq_16_rxs_m_8_boundedrand_r(struct pcg_state_setseq_16* rng,
-                                    uint8_t bound)
-{
-    uint8_t threshold = ((uint8_t)(-bound)) % bound;
-    for (;;) {
-        uint8_t r = pcg_setseq_16_rxs_m_8_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-
-inline uint16_t pcg_setseq_32_rxs_m_16_random_r(struct pcg_state_setseq_32* rng)
-{
-    uint32_t oldstate = rng->state;
-    pcg_setseq_32_step_r(rng);
-    return pcg_output_rxs_m_32_16(oldstate);
-}
-
-inline uint16_t
-pcg_setseq_32_rxs_m_16_boundedrand_r(struct pcg_state_setseq_32* rng,
-                                     uint16_t bound)
-{
-    uint16_t threshold = ((uint16_t)(-bound)) % bound;
-    for (;;) {
-        uint16_t r = pcg_setseq_32_rxs_m_16_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-
-inline uint32_t pcg_setseq_64_rxs_m_32_random_r(struct pcg_state_setseq_64* rng)
-{
-    uint64_t oldstate = rng->state;
-    pcg_setseq_64_step_r(rng);
-    return pcg_output_rxs_m_64_32(oldstate);
-}
-
-inline uint32_t
-pcg_setseq_64_rxs_m_32_boundedrand_r(struct pcg_state_setseq_64* rng,
-                                     uint32_t bound)
-{
-    uint32_t threshold = -bound % bound;
-    for (;;) {
-        uint32_t r = pcg_setseq_64_rxs_m_32_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-
-#if PCG_HAS_128BIT_OPS
-inline uint64_t
-pcg_setseq_128_rxs_m_64_random_r(struct pcg_state_setseq_128* rng)
-{
-    pcg_setseq_128_step_r(rng);
-    return pcg_output_rxs_m_128_64(rng->state);
-}
-#endif
-
-#if PCG_HAS_128BIT_OPS
-inline uint64_t
-pcg_setseq_128_rxs_m_64_boundedrand_r(struct pcg_state_setseq_128* rng,
-                                      uint64_t bound)
-{
-    uint64_t threshold = -bound % bound;
-    for (;;) {
-        uint64_t r = pcg_setseq_128_rxs_m_64_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-#endif
-
-inline uint8_t pcg_mcg_16_rxs_m_8_random_r(struct pcg_state_16* rng)
-{
-    uint16_t oldstate = rng->state;
-    pcg_mcg_16_step_r(rng);
-    return pcg_output_rxs_m_16_8(oldstate);
-}
-
-inline uint8_t pcg_mcg_16_rxs_m_8_boundedrand_r(struct pcg_state_16* rng,
-                                                uint8_t bound)
-{
-    uint8_t threshold = ((uint8_t)(-bound)) % bound;
-    for (;;) {
-        uint8_t r = pcg_mcg_16_rxs_m_8_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-
-inline uint16_t pcg_mcg_32_rxs_m_16_random_r(struct pcg_state_32* rng)
-{
-    uint32_t oldstate = rng->state;
-    pcg_mcg_32_step_r(rng);
-    return pcg_output_rxs_m_32_16(oldstate);
-}
-
-inline uint16_t pcg_mcg_32_rxs_m_16_boundedrand_r(struct pcg_state_32* rng,
-                                                  uint16_t bound)
-{
-    uint16_t threshold = ((uint16_t)(-bound)) % bound;
-    for (;;) {
-        uint16_t r = pcg_mcg_32_rxs_m_16_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-
-inline uint32_t pcg_mcg_64_rxs_m_32_random_r(struct pcg_state_64* rng)
-{
-    uint64_t oldstate = rng->state;
-    pcg_mcg_64_step_r(rng);
-    return pcg_output_rxs_m_64_32(oldstate);
-}
-
-inline uint32_t pcg_mcg_64_rxs_m_32_boundedrand_r(struct pcg_state_64* rng,
-                                                  uint32_t bound)
-{
-    uint32_t threshold = -bound % bound;
-    for (;;) {
-        uint32_t r = pcg_mcg_64_rxs_m_32_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-
-#if PCG_HAS_128BIT_OPS
-inline uint64_t pcg_mcg_128_rxs_m_64_random_r(struct pcg_state_128* rng)
-{
-    pcg_mcg_128_step_r(rng);
-    return pcg_output_rxs_m_128_64(rng->state);
-}
-#endif
-
-#if PCG_HAS_128BIT_OPS
-inline uint64_t pcg_mcg_128_rxs_m_64_boundedrand_r(struct pcg_state_128* rng,
-                                                   uint64_t bound)
-{
-    uint64_t threshold = -bound % bound;
-    for (;;) {
-        uint64_t r = pcg_mcg_128_rxs_m_64_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
-#endif
-
 /* Generation functions for XSL RR (only defined for "large" types) */
 
 inline uint32_t pcg_oneseq_64_xsl_rr_32_random_r(struct pcg_state_64* rng)
@@ -2369,81 +2038,81 @@ pcg_setseq_128_xsl_rr_rr_128_boundedrand_r(struct pcg_state_setseq_128* rng,
 }
 #endif
 
-/*** Typedefs */
+//// Typedefs
 typedef struct pcg_state_setseq_64      pcg32_random_t;
 typedef struct pcg_state_64             pcg32s_random_t;
 typedef struct pcg_state_64             pcg32u_random_t;
 typedef struct pcg_state_64             pcg32f_random_t;
-/*** random_r */
+//// random_r
 #define pcg32_random_r                  pcg_setseq_64_xsh_rr_32_random_r
 #define pcg32s_random_r                 pcg_oneseq_64_xsh_rr_32_random_r
 #define pcg32u_random_r                 pcg_unique_64_xsh_rr_32_random_r
 #define pcg32f_random_r                 pcg_mcg_64_xsh_rs_32_random_r
-/*** boundedrand_r */
+//// boundedrand_r
 #define pcg32_boundedrand_r             pcg_setseq_64_xsh_rr_32_boundedrand_r
 #define pcg32s_boundedrand_r            pcg_oneseq_64_xsh_rr_32_boundedrand_r
 #define pcg32u_boundedrand_r            pcg_unique_64_xsh_rr_32_boundedrand_r
 #define pcg32f_boundedrand_r            pcg_mcg_64_xsh_rs_32_boundedrand_r
-/*** srandom_r */
+//// srandom_r
 #define pcg32_srandom_r                 pcg_setseq_64_srandom_r
 #define pcg32s_srandom_r                pcg_oneseq_64_srandom_r
 #define pcg32u_srandom_r                pcg_unique_64_srandom_r
 #define pcg32f_srandom_r                pcg_mcg_64_srandom_r
-/*** advance_r */
+//// advance_r
 #define pcg32_advance_r                 pcg_setseq_64_advance_r
 #define pcg32s_advance_r                pcg_oneseq_64_advance_r
 #define pcg32u_advance_r                pcg_unique_64_advance_r
 #define pcg32f_advance_r                pcg_mcg_64_advance_r
 
 #if PCG_HAS_128BIT_OPS
-/*** Typedefs */
+//// Typedefs
 typedef struct pcg_state_setseq_128     pcg64_random_t;
 typedef struct pcg_state_128            pcg64s_random_t;
 typedef struct pcg_state_128            pcg64u_random_t;
 typedef struct pcg_state_128            pcg64f_random_t;
-/*** random_r */
+//// random_r
 #define pcg64_random_r                  pcg_setseq_128_xsl_rr_64_random_r
 #define pcg64s_random_r                 pcg_oneseq_128_xsl_rr_64_random_r
 #define pcg64u_random_r                 pcg_unique_128_xsl_rr_64_random_r
 #define pcg64f_random_r                 pcg_mcg_128_xsl_rr_64_random_r
-/*** boundedrand_r */
+//// boundedrand_r
 #define pcg64_boundedrand_r             pcg_setseq_128_xsl_rr_64_boundedrand_r
 #define pcg64s_boundedrand_r            pcg_oneseq_128_xsl_rr_64_boundedrand_r
 #define pcg64u_boundedrand_r            pcg_unique_128_xsl_rr_64_boundedrand_r
 #define pcg64f_boundedrand_r            pcg_mcg_128_xsl_rr_64_boundedrand_r
-/*** srandom_r */
+//// srandom_r
 #define pcg64_srandom_r                 pcg_setseq_128_srandom_r
 #define pcg64s_srandom_r                pcg_oneseq_128_srandom_r
 #define pcg64u_srandom_r                pcg_unique_128_srandom_r
 #define pcg64f_srandom_r                pcg_mcg_128_srandom_r
-/*** advance_r */
+//// advance_r
 #define pcg64_advance_r                 pcg_setseq_128_advance_r
 #define pcg64s_advance_r                pcg_oneseq_128_advance_r
 #define pcg64u_advance_r                pcg_unique_128_advance_r
 #define pcg64f_advance_r                pcg_mcg_128_advance_r
 #endif
 
-/*** Typedefs */
+//// Typedefs
 typedef struct pcg_state_8              pcg8si_random_t;
 typedef struct pcg_state_16             pcg16si_random_t;
 typedef struct pcg_state_32             pcg32si_random_t;
 typedef struct pcg_state_64             pcg64si_random_t;
-/*** random_r */
+//// random_r
 #define pcg8si_random_r                 pcg_oneseq_8_rxs_m_xs_8_random_r
 #define pcg16si_random_r                pcg_oneseq_16_rxs_m_xs_16_random_r
 #define pcg32si_random_r                pcg_oneseq_32_rxs_m_xs_32_random_r
 #define pcg64si_random_r                pcg_oneseq_64_rxs_m_xs_64_random_r
-/*** boundedrand_r */
+//// boundedrand_r
 #define pcg8si_boundedrand_r            pcg_oneseq_8_rxs_m_xs_8_boundedrand_r
 #define pcg16si_boundedrand_r           pcg_oneseq_16_rxs_m_xs_16_boundedrand_r
 #define pcg32si_boundedrand_r           pcg_oneseq_32_rxs_m_xs_32_boundedrand_r
 #define pcg64si_boundedrand_r           pcg_oneseq_64_rxs_m_xs_64_boundedrand_r
-/*** srandom_r */
+//// srandom_r
 #define pcg8si_srandom_r                pcg_oneseq_8_srandom_r
 #define pcg16si_srandom_r               pcg_oneseq_16_srandom_r
 #define pcg32si_srandom_r               pcg_oneseq_32_srandom_r
 #define pcg64si_srandom_r               pcg_oneseq_64_srandom_r
-/*** advance_r */
+//// advance_r
 #define pcg8si_advance_r                pcg_oneseq_8_advance_r
 #define pcg16si_advance_r               pcg_oneseq_16_advance_r
 #define pcg32si_advance_r               pcg_oneseq_32_advance_r
@@ -2457,27 +2126,27 @@ typedef struct pcg_state_128        pcg128si_random_t;
 #define pcg128si_advance_r          pcg_oneseq_128_advance_r
 #endif
 
-/*** Typedefs */
+//// Typedefs
 typedef struct pcg_state_setseq_8       pcg8i_random_t;
 typedef struct pcg_state_setseq_16      pcg16i_random_t;
 typedef struct pcg_state_setseq_32      pcg32i_random_t;
 typedef struct pcg_state_setseq_64      pcg64i_random_t;
-/*** random_r */
+//// random_r
 #define pcg8i_random_r                  pcg_setseq_8_rxs_m_xs_8_random_r
 #define pcg16i_random_r                 pcg_setseq_16_rxs_m_xs_16_random_r
 #define pcg32i_random_r                 pcg_setseq_32_rxs_m_xs_32_random_r
 #define pcg64i_random_r                 pcg_setseq_64_rxs_m_xs_64_random_r
-/*** boundedrand_r */
+//// boundedrand_r
 #define pcg8i_boundedrand_r             pcg_setseq_8_rxs_m_xs_8_boundedrand_r
 #define pcg16i_boundedrand_r            pcg_setseq_16_rxs_m_xs_16_boundedrand_r
 #define pcg32i_boundedrand_r            pcg_setseq_32_rxs_m_xs_32_boundedrand_r
 #define pcg64i_boundedrand_r            pcg_setseq_64_rxs_m_xs_64_boundedrand_r
-/*** srandom_r */
+//// srandom_r
 #define pcg8i_srandom_r                 pcg_setseq_8_srandom_r
 #define pcg16i_srandom_r                pcg_setseq_16_srandom_r
 #define pcg32i_srandom_r                pcg_setseq_32_srandom_r
 #define pcg64i_srandom_r                pcg_setseq_64_srandom_r
-/*** advance_r */
+//// advance_r
 #define pcg8i_advance_r                 pcg_setseq_8_advance_r
 #define pcg16i_advance_r                pcg_setseq_16_advance_r
 #define pcg32i_advance_r                pcg_setseq_32_advance_r
@@ -2491,13 +2160,13 @@ typedef struct pcg_state_setseq_128   pcg128i_random_t;
 #define pcg128i_advance_r             pcg_setseq_128_advance_r
 #endif
 
-extern uint32_t pcg32_random(void);
+extern uint32_t pcg32_random();
 extern uint32_t pcg32_boundedrand(uint32_t bound);
 extern void     pcg32_srandom(uint64_t seed, uint64_t seq);
 extern void     pcg32_advance(uint64_t delta);
 
 #if PCG_HAS_128BIT_OPS
-extern uint64_t pcg64_random(void);
+extern uint64_t pcg64_random();
 extern uint64_t pcg64_boundedrand(uint64_t bound);
 extern void     pcg64_srandom(pcg128_t seed, pcg128_t seq);
 extern void     pcg64_advance(pcg128_t delta);
@@ -2520,19 +2189,19 @@ extern void     pcg64_advance(pcg128_t delta);
 #define PCG64F_INITIALIZER      PCG_STATE_MCG_128_INITIALIZER
 #endif
 
+#if PCG_HAS_128BIT_OPS
 #define PCG8SI_INITIALIZER      PCG_STATE_ONESEQ_8_INITIALIZER
 #define PCG16SI_INITIALIZER     PCG_STATE_ONESEQ_16_INITIALIZER
 #define PCG32SI_INITIALIZER     PCG_STATE_ONESEQ_32_INITIALIZER
 #define PCG64SI_INITIALIZER     PCG_STATE_ONESEQ_64_INITIALIZER
-#if PCG_HAS_128BIT_OPS
 #define PCG128SI_INITIALIZER    PCG_STATE_ONESEQ_128_INITIALIZER
 #endif
 
+#if PCG_HAS_128BIT_OPS
 #define PCG8I_INITIALIZER       PCG_STATE_SETSEQ_8_INITIALIZER
 #define PCG16I_INITIALIZER      PCG_STATE_SETSEQ_16_INITIALIZER
 #define PCG32I_INITIALIZER      PCG_STATE_SETSEQ_32_INITIALIZER
 #define PCG64I_INITIALIZER      PCG_STATE_SETSEQ_64_INITIALIZER
-#if PCG_HAS_128BIT_OPS
 #define PCG128I_INITIALIZER     PCG_STATE_SETSEQ_128_INITIALIZER
 #endif
 
@@ -2540,5 +2209,5 @@ extern void     pcg64_advance(pcg128_t delta);
 }
 #endif
 
-#endif /* PCG_VARIANTS_H_INCLUDED */
+#endif // PCG_VARIANTS_H_INCLUDED
 
