@@ -61,52 +61,26 @@ extern "C" {
 
 inline uint8_t pcg_rotr_8(uint8_t value, unsigned int rot)
 {
-/* Older versions of this library with older versions of clang and gcc
- * fail to infer rotation instructions. Inference is preferable to inline
- * assembly when it works though.
- */
-#if PCG_USE_INLINE_ASM && __clang__ && (__x86_64__  || __i386__)
-    asm ("rorb   %%cl, %0" : "=r" (value) : "0" (value), "c" (rot));
-    return value;
-#else
     rot &= 7;
     return (value >> rot) | (value << ((- rot) & 7));
-#endif
 }
 
 inline uint16_t pcg_rotr_16(uint16_t value, unsigned int rot)
 {
-#if PCG_USE_INLINE_ASM && __clang__ && (__x86_64__  || __i386__)
-    asm ("rorw   %%cl, %0" : "=r" (value) : "0" (value), "c" (rot));
-    return value;
-#else
     rot &= 15;
     return (value >> rot) | (value << ((- rot) & 15));
-#endif
 }
 
 inline uint32_t pcg_rotr_32(uint32_t value, unsigned int rot)
 {
-#if PCG_USE_INLINE_ASM && __clang__ && (__x86_64__  || __i386__)
-    asm ("rorl   %%cl, %0" : "=r" (value) : "0" (value), "c" (rot));
-    return value;
-#else
     rot &= 31;
     return (value >> rot) | (value << ((- rot) & 31));
-#endif
 }
 
 inline uint64_t pcg_rotr_64(uint64_t value, unsigned int rot)
 {
-#if 0 && PCG_USE_INLINE_ASM && __clang__ && __x86_64__
-    /* For whatever reason, clang actually *does* generate rotq by
-       itself, so we don't need this code. */
-    asm ("rorq   %%cl, %0" : "=r" (value) : "0" (value), "c" (rot));
-    return value;
-#else
     rot &= 63;
     return (value >> rot) | (value << ((- rot) & 63));
-#endif
 }
 
 #if PCG_HAS_128BIT_OPS
